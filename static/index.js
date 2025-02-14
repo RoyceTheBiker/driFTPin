@@ -1,3 +1,6 @@
+// Global place holder for the modal dialog box
+let buttonAction = () => { }
+
 /**
  * Front Loader dynamically loads JS files
  * with a timestamp to prevent caching.
