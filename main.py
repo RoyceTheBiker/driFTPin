@@ -1,8 +1,8 @@
 # from database import Database
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from starlette.responses import FileResponse
 import logging
-from os import walk, listdir
+from os import listdir
 from os.path import isfile, isdir
 
 log = logging.getLogger("uvicorn")
