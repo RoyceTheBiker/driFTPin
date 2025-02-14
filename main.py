@@ -1,4 +1,4 @@
-# from database import Database
+from database import Database
 from fastapi import FastAPI, HTTPException
 from starlette.responses import FileResponse
 import logging
@@ -14,8 +14,8 @@ driFTPin full-stack example project using FastAPI & TinyDB
 
 # https://fastapi.tiangolo.com/tutorial/metadata/#license-identifier
 app = FastAPI(title="driFTPin Web Portal", description=description)
-# dBase = Database("Database", log)
-# app.include_router(dBase.router)
+dBase = Database("Database", log)
+app.include_router(dBase.router)
 
 # GET / loads index.html
 @app.get("/")
