@@ -1,6 +1,6 @@
 class About {
   constructor() {
-    alert('This is the about JavaScript');
+    console.log('This is the about JavaScript');
   }
 
   sayHello() {

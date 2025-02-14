@@ -8,7 +8,7 @@ function frontLoader(callback) {
 
   // Add JS files to be loaded. The js file extension is appended
   scripts.push({ name: 'about', done: false });
-  // scripts.push({ name: 'about', done: false });
+  scripts.push({ name: 'items', done: false });
   // scripts.push({ name: 'about', done: false });
   // scripts.push({ name: 'about', done: false });
   // scripts.push({ name: 'about', done: false });
@@ -47,5 +47,10 @@ function setupIndex() {
     $(document).scrollTop(0);
     about.sayHello();
 
+    $.get('/static/items.html', (pageData) => {
+      $('#contentDiv').html(pageData);
+      console.log('items.loadData()')
+      items.loadData();
+    })
   });
 }
