@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>driFTPin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="font/woff" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/fonts/bootstrap-icons.woff">
+    <link rel="stylesheet" type="font/woff" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/fonts/bootstrap-icons.woff2">
+    <link href="/static/style.css" rel="stylesheet" />
+    <script type="text/javascript">
+      var c = Date.now();
+      document.write('<script type="text/javascript" src="/static/index.js?' + c + '"><\/script>');
+    </script>
+  </head>
+<body onload="setupIndex()">
+  <div class="textBox">
+    <h1>driFTPin</h1>
+    <div>
+
+      Source code is on <a href="https://gitlab.com/SiliconTao-open-source/driFTPin">GitLab</a>
+    </div>
+    <div>
+      This is a fork of another backend using FastAPI & TinyDB that is actively being developed.
+      Check back often and expect frequent updates to this project.
+    </div>
+    <br>
+    <div>
+      This is an example project of a micro full-stack using these backend tools is a backend framework much like
+      <ul>
+        <li><a href="https://fastapi.tiangolo.com/">FastAPI</a></li>
+        <li><a href="https://tinydb.readthedocs.io/en/latest/">TinyDB</a></li>
+        <li><a href="https://www.python.org/">Python</a></li>
+      </ul>
+    </div>
+    <div>
+      The frontend uses raw
+      <ul>
+        <li><a href="https://www.w3schools.com/html/">HTML</a></li>
+        <li><a href="https://www.w3schools.com/css/">CSS</a></li>
+        <li><a href="https://www.w3schools.com/jQuery/">jQuery</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <dialog id="modalDialog">
+    <div id="dialogDiv">Greetings, one and all!</div>
+    <form method="dialog">
+      <button onclick="if(buttonAction) { buttonAction(); }">OK</button>
+      <button id="cancelButton">Cancel</button>
+    </form>
+  </dialog>
+
+  <!-- Required for file upload to work -->
+  <input type="file" id="uploadFileInput" #file class="file-upload"
+    style="display:none" onchange="uploadFileEvent(this.value)">
+
+  <!-- Required for file download to work  -->
+  <iframe id="download_iframe" style="display:none;"></iframe>
+</body>
+</html>
+

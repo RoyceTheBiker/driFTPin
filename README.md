@@ -2,6 +2,9 @@
 
 Source code is on [GitLab](https://gitlab.com/SiliconTao-open-source/driFTPin)
 
+This is a fork of another backend using FastAPI & TinyDB that is actively being developed.
+Check back often and expect frequent updates to this project.
+
 This is an example project of a micro full-stack using these backend tools is a backend framework much like
  - [FastAPI](https://fastapi.tiangolo.com/)
  - [TinyDB](https://tinydb.readthedocs.io/en/latest/)
@@ -29,9 +32,7 @@ The install requires a setup of the Python environment.
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-.venv/bin/pip install slugify
-.venv/bin/pip install tinydb uvicorn
-.venv/bin/pip install "fastapi[standard]"
+.venv/bin/pip install tinydb uvicorn "fastapi[standard]"
 ```
 
 ## Starting The Backend
