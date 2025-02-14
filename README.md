@@ -21,13 +21,12 @@ This is in contrast to a frontend like
 [Angular](https://angular.dev/)
 that require compilation before sending to the browser.
 
-Generated frontends like React and Angular are rich, dynamic and feature loaded to create faster and
-more engaging web pages to enhance the user experience.
+Generated frontends like React and Angular are rich, dynamic, and feature-loaded to create faster, more engaging web pages to enhance user experience.
 [driFTPin](https://gitlab.com/SiliconTao-open-source/driFTPin) gives you none of that 😂,
-but you are free to expand on this open source project and let me know what you have built.
+but you are free to expand on this open-source project and let me know what you have built.
 
 ## Installing
-The install requires a setup of the Python environment.
+The installation requires a setup of the Python environment.
 
 ```bash
 python3 -m venv .venv
