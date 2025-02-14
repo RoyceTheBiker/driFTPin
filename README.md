@@ -47,3 +47,10 @@ Starting uvicorn will start the FastAPI service.
 ### Starting FastAPI
 FastAPI is a backend framework much like [ExpressJS](https://expressjs.com/) is for NodeJS.
 Starting FastAPI will start uvicorn.
+
+
+## Open The Page
+Once the backend has started, open your web browser to [http://127.0.0.1:8000](http://127.0.0.1:8000)
+
+## FastAPI Swagger
+FastAPI automagically generates a Rest interface at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
