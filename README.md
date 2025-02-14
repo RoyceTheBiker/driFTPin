@@ -1,7 +1,4 @@
 # driFTPin
-
-Source code is on [GitLab](https://gitlab.com/SiliconTao-open-source/driFTPin)
-
 This is a fork of another backend using FastAPI & TinyDB that is actively being developed.
 Check back often and expect frequent updates to this project.
 
@@ -33,6 +30,8 @@ python3 -m venv .venv
 source .venv/bin/activate
 .venv/bin/pip install tinydb uvicorn "fastapi[standard]"
 ```
+
+The source code is on [GitLab](https://gitlab.com/SiliconTao-open-source/driFTPin)
 
 ## Starting The Backend
 There are two ways to start it depending on preference.
