@@ -1,6 +1,5 @@
 # driFTPin
-This is a fork of another backend using FastAPI & TinyDB that is actively being developed.
-Check back often and expect frequent updates to this project.
+This is an example project for creating a backend using FastAPI & TinyDB.
 
 This is an example project of a micro full-stack using these backend tools is a backend framework much like
  - [FastAPI](https://fastapi.tiangolo.com/)
