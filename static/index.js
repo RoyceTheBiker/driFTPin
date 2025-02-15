@@ -46,10 +46,6 @@ function setupIndex() {
     $(document).scrollTop(0);
     about.sayHello();
 
-    $.get('/static/items.html', (pageData) => {
-      $('#contentDiv').html(pageData);
-      console.log('items.loadData()')
-      items.loadData();
-    })
+    items.loadItemsTable();
   });
 }

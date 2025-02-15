@@ -11,9 +11,9 @@ class Items {
       $('#inputLabel').html('Name:');
       $('#inputBox').val('');
       $('#inputBox').prop('placeholder', 'new name');
-      $('#inputLabel2').html('Title:');
+      $('#inputLabel2').html('Description:');
       $('#inputBox2').val('');
-      $('#inputBox2').prop('placeholder', 'new title');
+      $('#inputBox2').prop('placeholder', 'new description');
       $('#inputLabel3').html('Quantity:');
       $('#inputBox3').val('');
       $('#inputBox3').prop('placeholder', '7');
@@ -24,7 +24,7 @@ class Items {
           type: 'POST',
           data: JSON.stringify({
             'name': $('#inputBox').val(),
-            'title': $('#inputBox2').val(),
+            'description': $('#inputBox2').val(),
             'quantity': $('#inputBox3').val()
           }),
           contentType: "application/json; charset=utf-8",
@@ -50,9 +50,9 @@ class Items {
       $('#inputLabel').html('Name:');
       $('#inputBox').prop('disabled', true);
       $('#inputBox').val(itemName);
-      $('#inputLabel2').html('Title:');
-      $('#inputBox2').val(selectedItem.title);
-      $('#inputBox2').prop('placeholder', 'new title');
+      $('#inputLabel2').html('Description:');
+      $('#inputBox2').val(selectedItem.description);
+      $('#inputBox2').prop('placeholder', 'new description');
       $('#inputLabel3').html('Quantity:');
       $('#inputBox3').val(selectedItem.quantity);
       $('#inputBox3').prop('placeholder', '7');
@@ -63,7 +63,7 @@ class Items {
           type: 'PUT',
           data: JSON.stringify({
             'name': $('#inputBox').val(),
-            'title': $('#inputBox2').val(),
+            'description': $('#inputBox2').val(),
             'quantity': $('#inputBox3').val()
           }),
           contentType: "application/json; charset=utf-8",
@@ -80,22 +80,33 @@ class Items {
     })
   }
 
-  loadData() {
+  loadData(callback) {
     $.getJSON('/items', (jsonData) => {
       let rowIndex = 0;
       this.itemData = jsonData;
       // blank the table
       $('.itemsTableRow').remove();
-      jsonData.forEach( (jD) => {
+      jsonData.forEach( (jD, index, array) => {
         const oddRowClass = (rowIndex++ & 1) ? 'row-odd' : 'row-even';
         $('#itemsTable tr:last').after('<tr class="' + oddRowClass +
-          ' itemsTableRow" onclick="items.editItem(\'' + jD.name + '\')"><td>' + jD.name + '</td><td>' + jD.title +
+          ' itemsTableRow" onclick="items.editItem(\'' + jD.name + '\')"><td>' + jD.name + '</td><td>' + jD.description +
           '</td><td>' + jD.quantity + '</td></tr>');
+        if(index === array.length - 1) {
+          callback();
+        }
       });
     });
   }
 
-
+  loadItemsTable() {
+    console.time('loadItemsTable');
+    $.get('/static/items.html', (pageData) => {
+      $('#contentDiv').html(pageData);
+      this.loadData(() => {
+        console.timeEnd('loadItemsTable');
+      });
+    });
+  }
 }
 
 let items = new Items();

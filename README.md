@@ -109,7 +109,7 @@ $.ajax({
   type: 'PUT',
   data: JSON.stringify({
     'name': $('#inputBox').val(),
-    'title': $('#inputBox2').val(),
+    'description': $('#inputBox2').val(),
     'quantity': $('#inputBox3').val()
   }),
   contentType: "application/json; charset=utf-8",
@@ -128,7 +128,7 @@ The backend uses a model class **Item** to deserialize the object.
 ```python
 class Item(BaseModel):
   name: str
-  title: str
+  description: str
   quantity: str
 
 def newItem(self, item: Item):
@@ -137,7 +137,7 @@ def newItem(self, item: Item):
   table = TinyDB("driFTPin.json").table("items")
   table.insert({
     "name": item.name,
-    "title": item.title,
+    "description": item.description,
     "quantity": item.quantity
   })
   return "ok"
@@ -152,7 +152,7 @@ the **Query()** function is used to match the name field.
 def updateItem(self, item: Item):
   table = TinyDB("driFTPin.json").table("items")
   table.update({
-    "title": item.title,
+    "description": item.description,
     "quantity": item.quantity
   }, Query().name == item.name)
   return "ok"
@@ -166,11 +166,11 @@ The ``items`` table lets the user enter three values and update the entries.
 db = TinyDB("driFTPin.json")
 self.log.info('Make new DB file')
 table = db.table("items")
-table.insert({ "name": "Red Ball", "title": "Apple", "quantity": 6})
-table.insert({ "name": "Tall Bush", "title": "Tree", "quantity": 200})
-table.insert({ "name": "Green Stick", "title": "Pickle", "quantity": 3})
-table.insert({ "name": "Orange", "title": "An orange", "quantity": 12})
-table.insert({ "name": "Yellow Stick", "title": "Banana", "quantity": 1})
+table.insert({ "name": "Red Ball", "description": "Apple", "quantity": 6})
+table.insert({ "name": "Tall Bush", "description": "Tree", "quantity": 200})
+table.insert({ "name": "Green Stick", "description": "Pickle", "quantity": 3})
+table.insert({ "name": "Orange", "description": "An orange", "quantity": 12})
+table.insert({ "name": "Yellow Stick", "description": "Banana", "quantity": 1})
 ```
 
 

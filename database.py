@@ -52,11 +52,11 @@ class Database:
     db = TinyDB("driFTPin.json")
     self.log.info('Make new DB file')
     table = db.table("items")
-    table.insert({ "name": "Red Ball", "title": "Apple", "quantity": 6})
-    table.insert({ "name": "Tall Bush", "title": "Tree", "quantity": 200})
-    table.insert({ "name": "Green Stick", "title": "Pickle", "quantity": 3})
-    table.insert({ "name": "Orange", "title": "An orange", "quantity": 12})
-    table.insert({ "name": "Yellow Stick", "title": "Banana", "quantity": 1})
+    table.insert({ "name": "Milk", "description": "Apple", "quantity": 6})
+    table.insert({ "name": "Cheese", "description": "Tree", "quantity": 200})
+    table.insert({ "name": "Eggs", "description": "Pickle", "quantity": 3})
+    table.insert({ "name": "Orange Juice", "description": "An orange", "quantity": 12})
+    table.insert({ "name": "Yellow Stick", "description": "Banana", "quantity": 1})
     table = db.table("words")
     index = 0
     for w in self.sampleWordsFromCode("./"):
@@ -72,7 +72,7 @@ class Database:
 
   class Item(BaseModel):
     name: str
-    title: str
+    description: str
     quantity: str
 
   def newItem(self, item: Item):
@@ -81,7 +81,7 @@ class Database:
     table = TinyDB("driFTPin.json").table("items")
     table.insert({
       "name": item.name,
-      "title": item.title,
+      "description": item.description,
       "quantity": item.quantity
     })
     return "ok"
@@ -89,7 +89,7 @@ class Database:
   def updateItem(self, item: Item):
     table = TinyDB("driFTPin.json").table("items")
     table.update({
-      "title": item.title,
+      "description": item.description,
       "quantity": item.quantity
     }, Query().name == item.name)
     return "ok"
