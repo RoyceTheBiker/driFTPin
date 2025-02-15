@@ -94,3 +94,62 @@ function frontLoader(callback) {
   });
 }
 ```
+
+## Ajax JSON PUT & POST
+jQuery put and post don't support sending JSON as an object. The JSON can be stringified to send and the parsed in the backend, but to send the JSON as an object the **$.ajax** function is used.
+
+### POST
+```javascript
+$.ajax({
+  url: '/item',
+  type: 'PUT',
+  data: JSON.stringify({
+    'name': $('#inputBox').val(),
+    'title': $('#inputBox2').val(),
+    'quantity': $('#inputBox3').val()
+  }),
+  contentType: "application/json; charset=utf-8",
+  dataType: "json",
+  success: function () {
+    items.loadData();
+  },
+  error: () => {
+    console.error('Dang!');
+  }
+});
+```
+
+The backend uses a model class **Item** to deserialize the object.
+
+```python
+class Item(BaseModel):
+  name: str
+  title: str
+  quantity: str
+
+def newItem(self, item: Item):
+  # Using the formatted string Python can deserialize JSON data using the = after the variable name
+  self.log.info(f"newItem {item=}")
+  table = TinyDB("driFTPin.json").table("items")
+  table.insert({
+    "name": item.name,
+    "title": item.title,
+    "quantity": item.quantity
+  })
+  return "ok"
+```
+
+### PUT
+PUT works almost the same as POST but to update an existing entry it needs to use a key filed to match.
+This PUT uses the **name** field to update the entry. To locate the entry that needs to be updated,
+the **Query()** function is used to match the name field.
+
+```python
+def updateItem(self, item: Item):
+  table = TinyDB("driFTPin.json").table("items")
+  table.update({
+    "title": item.title,
+    "quantity": item.quantity
+  }, Query().name == item.name)
+  return "ok"
+```

@@ -36,8 +36,7 @@ class Items {
             console.error('Dang!');
           }
         });
-
-      };
+      }
     })
   }
 
