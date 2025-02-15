@@ -59,11 +59,11 @@ class Database:
     table = db.table("words")
     index = 0
     for w in self.sampleWordsFromCode("./"):
-      self.log.debug(f"Adding word {index} = {w}")
       table.insert({ "id": index, "word": w})
       index += 1
 
     db.close()
+    self.log.info(f"Sample DB has been built. The 'words' table contains {index} entries.")
 
   def getItems(self):
     table = TinyDB("driFTPin.json").table("items")
