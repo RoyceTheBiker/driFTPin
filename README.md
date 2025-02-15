@@ -153,3 +153,49 @@ def updateItem(self, item: Item):
   }, Query().name == item.name)
   return "ok"
 ```
+
+## Sample Data
+Sample data is created and saved to the **driFTPin.json** file.
+
+The ``items`` table lets the user enter three values and update the entries.
+```python
+db = TinyDB("driFTPin.json")
+self.log.info('Make new DB file')
+table = db.table("items")
+table.insert({ "name": "Red Ball", "title": "Apple", "quantity": 6})
+table.insert({ "name": "Tall Bush", "title": "Tree", "quantity": 200})
+table.insert({ "name": "Green Stick", "title": "Pickle", "quantity": 3})
+table.insert({ "name": "Orange", "title": "An orange", "quantity": 12})
+table.insert({ "name": "Yellow Stick", "title": "Banana", "quantity": 1})
+```
+
+
+The ``words`` table is built from the source code in this project. The goal is to create a larger table to show how pagination works.
+
+These methods navigate into the local directory and read identifiers (whole words) from the code then add those words to a ``set`` of unique entries.
+
+```python
+# This reads the source code files to get identifiers to build a sample DB with
+def sampleWordsFromCode(self, readDir: str = "./"):
+  # Use a set to only add unique values
+  words = set([])
+  for entry in listdir(path=readDir):
+    if isfile(entry):
+      for nE in self.readIdentifiers(entry):
+        words.add(nE)
+
+    if isdir(entry):
+      self.sampleWordsFromCode(entry)
+
+  return words
+
+def readIdentifiers(self, pathFile: str):
+  # Use a set to only add unique values
+  returnSet = set([])
+  with open(pathFile, "r") as readFile:
+    for line in readFile:
+      for ident in re.split('[^a-zA-Z]', line):
+        if len(ident) > 4:
+          returnSet.add(ident)
+  return returnSet
+```
