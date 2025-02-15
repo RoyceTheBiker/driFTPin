@@ -1,7 +1,7 @@
 # driFTPin
 This is an example project for creating a backend using FastAPI & TinyDB.
 
-This is an example project of a micro full-stack using these backend tools is a backend framework much like
+This is an example project of a micro full-stack using these backend tools as a backend framework much like
  - [FastAPI](https://fastapi.tiangolo.com/)
  - [TinyDB](https://tinydb.readthedocs.io/en/latest/)
  - [Python](https://www.python.org/)
@@ -90,7 +90,7 @@ FastAPI automagically generates a Rest interface at [http://127.0.0.1:8000/docs]
 ##  6. <a name='FrontLoader'></a>Front Loader
 This JavaScript function dynamically loads JS files with a timestamp to prevent browser caching. Once all the JS files have been loaded the callback resumes the start up of the page.
 
-This is not something that is normally done but can be helpful in micro and test environments.
+This is not normally done but can be helpful in micro and test environments.
 
 [index.js](static/index.js)
 ```javascript
@@ -206,7 +206,7 @@ def newItem(self, item: Item):
 ```
 
 ###  8.2. <a name='PUT'></a>PUT
-PUT works almost the same as POST but to update an existing entry it needs to use a key filed to match.
+PUT works almost the same as POST but to update an existing entry it needs to use a key field to match.
 This PUT uses the **name** field to update the entry. To locate the entry that needs to be updated,
 the **Query()** function is used to match the name field.
 
@@ -278,8 +278,8 @@ Pagination allows viewing smaller amounts of data page by page.
 
 The logic of Pagination is simple, define the range limits, start, size, and end; and keep track of the current page. Recalculate when navigating to another page.
 
-In this example the Python operator **lambda** is used to sort the objects. Python ``sort()`` works on simple list entries, but cannot be used here on objects.
-The lambda operator builds a function inline with given arguments. In this example the argument sets the sort key on the element value for ``word``.
+In this example, the Python operator **lambda** is used to sort the objects. Python ``sort()`` works on simple list entries, but cannot be used here on objects.
+The lambda operator builds a function in line with the given arguments. In this example, the argument sets the sort key on the element value for ``word``.
 
 The pagination method returns an object with two elements, ``pagination``, and ``data``.
 
@@ -339,11 +339,11 @@ loadData(callback) {
 ##  11. <a name='FilteringData'></a>Filtering Data
 The filtering example shows how two optional fields can be sent to the backend to create a custom filter.
 
-In this code the **lambda** operator creates a function to return True if the entry is to be included or False if the entry is to be removed from the set.
+In this code, the **lambda** operator creates a function to return True if the entry is to be included or False if the entry is to be removed from the set.
 
 [database.py](database.py)
 ```python
-# Build a generic filter function using lambda operator
+# Build a generic filter function using the lambda operator
 def buildFilter(self, fieldName, filterText):
     return lambda dataSet: True if filterText.lower() in dataSet[fieldName].lower() else False
 
