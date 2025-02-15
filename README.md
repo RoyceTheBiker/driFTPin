@@ -22,13 +22,36 @@ Generated frontends like React and Angular are rich, dynamic, and feature-loaded
 [driFTPin](https://gitlab.com/SiliconTao-open-source/driFTPin) gives you none of that 😂,
 but you are free to expand on this open-source project and let me know what you have built.
 
-## Links
+<!-- vscode-markdown-toc -->
+* 1. [Links](#Links)
+* 2. [Installing](#Installing)
+* 3. [Starting The Backend](#StartingTheBackend)
+	* 3.1. [Starting With Uvicorn](#StartingWithUvicorn)
+	* 3.2. [Starting With FastAPI](#StartingWithFastAPI)
+* 4. [Open The Page](#OpenThePage)
+* 5. [FastAPI Swagger](#FastAPISwagger)
+* 6. [Front Loader](#FrontLoader)
+* 7. [Modal Popup Box](#ModalPopupBox)
+* 8. [Ajax JSON PUT & POST](#AjaxJSONPUTPOST)
+	* 8.1. [POST](#POST)
+	* 8.2. [PUT](#PUT)
+* 9. [Sample Data](#SampleData)
+* 10. [Pagination For Fast Loading](#PaginationForFastLoading)
+* 11. [Filtering Data](#FilteringData)
+
+<!-- vscode-markdown-toc-config
+	numbering=true
+	autoSave=true
+	/vscode-markdown-toc-config -->
+<!-- /vscode-markdown-toc -->
+
+##  1. <a name='Links'></a>Links
 Project homepage on [SiliconTao.com](https://silicontao.com/main/marquis/article/RoyceTheBiker/driFTPin)
 
 Project repository on [GitLab](https://gitlab.com/SiliconTao-open-source/driFTPin)
 
 
-## Installing
+##  2. <a name='Installing'></a>Installing
 The installation requires a setup of the Python environment.
 
 ```bash
@@ -37,19 +60,19 @@ source .venv/bin/activate
 .venv/bin/pip install tinydb uvicorn "fastapi[standard]"
 ```
 
-## Starting The Backend
+##  3. <a name='StartingTheBackend'></a>Starting The Backend
 There are two ways to start it depending on preference. Only one is needed, they both start the service but
 they each have a different way of showing output. Try them both and use the one that works best for your needs.
 
 
-### Starting With Uvicorn
+###  3.1. <a name='StartingWithUvicorn'></a>Starting With Uvicorn
 [Uvicorn](https://www.uvicorn.org/) handles TCP connections much like [NodeJS](https://nodejs.org/en) is for ExpressJS.
 Starting uvicorn will start the FastAPI service.
 ```bash
 ./.venv/bin/python3 -m uvicorn main:app --reload
 ```
 
-### Starting With FastAPI
+###  3.2. <a name='StartingWithFastAPI'></a>Starting With FastAPI
 FastAPI is a backend framework much like [ExpressJS](https://expressjs.com/) is for NodeJS.
 Starting FastAPI will start uvicorn.
 
@@ -57,15 +80,15 @@ Starting FastAPI will start uvicorn.
 ./.venv/bin/python3 -m fastapi dev main.py
 ```
 
-## Open The Page
+##  4. <a name='OpenThePage'></a>Open The Page
 Once the backend has started, open your web browser to [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
-## FastAPI Swagger
+##  5. <a name='FastAPISwagger'></a>FastAPI Swagger
 FastAPI automagically generates a Rest interface at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
 # Code Blocks
 
-## Front Loader
+##  6. <a name='FrontLoader'></a>Front Loader
 This JavaScript function dynamically loads JS files with a timestamp to prevent browser caching. Once all the JS files have been loaded the callback resumes the start up of the page.
 
 This is not something that is normally done but can be helpful in micro and test environments.
@@ -105,7 +128,7 @@ function frontLoader(callback) {
 }
 ```
 
-## Modal Popup Box
+##  7. <a name='ModalPopupBox'></a>Modal Popup Box
 A popup box is helpful to interact with the user without leaving the current page.
 
 This popup box can be altered to get different information from the user.
@@ -137,10 +160,10 @@ about() {
 }
 ```
 
-## Ajax JSON PUT & POST
+##  8. <a name='AjaxJSONPUTPOST'></a>Ajax JSON PUT & POST
 jQuery put and post doesn't support sending JSON as an object. The JSON can be stringified to send and parsed in the backend, but the **$.ajax** function is used to send the JSON as an object.
 
-### POST
+###  8.1. <a name='POST'></a>POST
 [items.js](static/items.js)
 ```javascript
 $.ajax({
@@ -183,7 +206,7 @@ def newItem(self, item: Item):
   return "ok"
 ```
 
-### PUT
+###  8.2. <a name='PUT'></a>PUT
 PUT works almost the same as POST but to update an existing entry it needs to use a key filed to match.
 This PUT uses the **name** field to update the entry. To locate the entry that needs to be updated,
 the **Query()** function is used to match the name field.
@@ -199,7 +222,7 @@ def updateItem(self, item: Item):
   return "ok"
 ```
 
-## Sample Data
+##  9. <a name='SampleData'></a>Sample Data
 Sample data is created and saved to the **driFTPin.json** file.
 
 The ``items`` table lets the user enter three values and update the entries.
@@ -249,7 +272,7 @@ def readIdentifiers(self, pathFile: str):
   return returnSet
 ```
 
-## Pagination For Fast Loading
+##  10. <a name='PaginationForFastLoading'></a>Pagination For Fast Loading
 Viewing large tables is slow and can quickly overwhelm users with too much information.
 
 Pagination allows viewing smaller amounts of data page by page.
@@ -314,7 +337,7 @@ loadData(callback) {
 }
 ```
 
-## Filtering Data
+##  11. <a name='FilteringData'></a>Filtering Data
 The filtering example shows how two optional fields can be sent to the backend to create a custom filter.
 
 In this code the **lambda** operator creates a function to return True if the entry is to be included or False if the entry is to be removed from the set.
