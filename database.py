@@ -52,11 +52,18 @@ class Database:
     db = TinyDB("driFTPin.json")
     self.log.info('Make new DB file')
     table = db.table("items")
-    table.insert({ "name": "Milk", "description": "Apple", "quantity": 6})
-    table.insert({ "name": "Cheese", "description": "Tree", "quantity": 200})
-    table.insert({ "name": "Eggs", "description": "Pickle", "quantity": 3})
-    table.insert({ "name": "Orange Juice", "description": "An orange", "quantity": 12})
-    table.insert({ "name": "Yellow Stick", "description": "Banana", "quantity": 1})
+    table.insert({ "name": "Milk", "description": "Dairy", "quantity": 6})
+    table.insert({ "name": "Cheese", "description": "Dairy", "quantity": 20})
+    table.insert({ "name": "Eggs", "description": "Poultry", "quantity": 3})
+    table.insert({ "name": "Orange Juice", "description": "Juice", "quantity": 12})
+    table.insert({ "name": "Banana", "description": "Fruit", "quantity": 1})
+
+    table.insert({ "name": "Pork", "description": "Meat", "quantity": 8})
+    table.insert({ "name": "Beef", "description": "Meat", "quantity": 15})
+    table.insert({ "name": "Fish", "description": "Meat", "quantity": 13})
+    table.insert({ "name": "Chicken", "description": "Poultry Meat", "quantity": 17})
+    table.insert({ "name": "Turkey", "description": "Poultry Meat", "quantity": 4})
+
     table = db.table("words")
     index = 0
     for w in self.sampleWordsFromCode("./"):
