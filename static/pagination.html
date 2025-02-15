@@ -1,11 +1,13 @@
 <div class="textBox">
-  <span>
-    <button onclick="pagination.goToPage(0);" class="btn  button-36e">First page</button>
-    <button onclick="pagination.goToPage(pagination.getCurrentPage() - 1);" class="btn  button-36e">Previous page</button>
-    <button onclick="pagination.goToPage(pagination.getCurrentPage() + 1);" class="btn  button-36e">Next page</button>
-    <button onclick="pagination.goToPage(pagination.getPageCount() - 1);" class="btn  button-36e">Last page</button>
-    <div id="currentPage">Page 0 of 0</div>
-  </span>
+  <div class="row">
+    <div class="col-auto">
+      <button onclick="pagination.goToPage(0);" class="btn  button-36e">First page</button>
+      <button onclick="pagination.goToPage(pagination.getCurrentPage() - 1);" class="btn  button-36e">Previous page</button>
+      <button onclick="pagination.goToPage(pagination.getCurrentPage() + 1);" class="btn  button-36e">Next page</button>
+      <button onclick="pagination.goToPage(pagination.getPageCount() - 1);" class="btn  button-36e">Last page</button>
+    </div>
+    <div id="currentPage" class="col-auto" style="font-size: large; margin-top: 10px;">Page 0 of 0</div>
+  </div>
 </div>
 
 <table id="pageTable">
