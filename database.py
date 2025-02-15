@@ -27,7 +27,7 @@ class Database:
       self.router = APIRouter()
       self.router.add_api_route("/items", self.getItems, methods=["GET"])
       self.router.add_api_route("/item", self.newItem, methods=["POST"])
-      self.router.add_api_route("/item", self.updateItem, methods=["PUT"])
+      # self.router.add_api_route("/item", self.updateItem, methods=["PUT"])
 
   def getItems(self):
     table = TinyDB("driFTPin.json").table("items")
@@ -36,14 +36,21 @@ class Database:
   class Item(BaseModel):
     name: str
     title: str
-    quantity: int
+    quantity: str
 
   def newItem(self, item: Item):
     # Using the formatted string Python can deserialize JSON data using the = after the variable name
-    self.log.info(f"newItems {item=}")
+    self.log.info(f"newItem {item=}")
     table = TinyDB("driFTPin.json").table("items")
-    table.insert(item)
+    table.insert({
+      "name": item.name,
+      "title": item.title,
+      "quantity": item.quantity
+    })
+    return "ok"
 
-  def updateItem(self, item: Item):
-    table = TinyDB("driFTPin.json").table("items")
-    table.update(item, Query().name == item.name)
+  # def updateItem(self, item: Item):
+  #   table = TinyDB("driFTPin.json").table("items")
+  #   table.update(item, Query().name == item.name)
+  #   return "ok"
+
