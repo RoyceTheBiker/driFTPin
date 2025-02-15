@@ -22,6 +22,12 @@ Generated frontends like React and Angular are rich, dynamic, and feature-loaded
 [driFTPin](https://gitlab.com/SiliconTao-open-source/driFTPin) gives you none of that 😂,
 but you are free to expand on this open-source project and let me know what you have built.
 
+## Links
+Project homepage on [SiliconTao.com](https://silicontao.com/main/marquis/article/RoyceTheBiker/driFTPin)
+
+Project repository on [GitLab](https://gitlab.com/SiliconTao-open-source/driFTPin)
+
+
 ## Installing
 The installation requires a setup of the Python environment.
 
@@ -30,8 +36,6 @@ python3 -m venv .venv
 source .venv/bin/activate
 .venv/bin/pip install tinydb uvicorn "fastapi[standard]"
 ```
-
-The source code is on [GitLab](https://gitlab.com/SiliconTao-open-source/driFTPin)
 
 ## Starting The Backend
 There are two ways to start it depending on preference.
@@ -195,6 +199,7 @@ def readIdentifiers(self, pathFile: str):
   with open(pathFile, "r") as readFile:
     for line in readFile:
       for ident in re.split('[^a-zA-Z]', line):
+        # Only words longer than 4 letters
         if len(ident) > 4:
           returnSet.add(ident)
   return returnSet
