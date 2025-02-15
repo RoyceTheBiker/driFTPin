@@ -27,7 +27,7 @@ class Database:
       self.router = APIRouter()
       self.router.add_api_route("/items", self.getItems, methods=["GET"])
       self.router.add_api_route("/item", self.newItem, methods=["POST"])
-      # self.router.add_api_route("/item", self.updateItem, methods=["PUT"])
+      self.router.add_api_route("/item", self.updateItem, methods=["PUT"])
 
   def getItems(self):
     table = TinyDB("driFTPin.json").table("items")
@@ -49,8 +49,11 @@ class Database:
     })
     return "ok"
 
-  # def updateItem(self, item: Item):
-  #   table = TinyDB("driFTPin.json").table("items")
-  #   table.update(item, Query().name == item.name)
-  #   return "ok"
+  def updateItem(self, item: Item):
+    table = TinyDB("driFTPin.json").table("items")
+    table.update({
+      "title": item.title,
+      "quantity": item.quantity
+    }, Query().name == item.name)
+    return "ok"
 
