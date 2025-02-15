@@ -6,15 +6,11 @@ let buttonAction = () => { }
  * with a timestamp to prevent caching.
  */
 function frontLoader(callback) {
-
   let scripts = [];
 
   // Add JS files to be loaded. The js file extension is appended
   scripts.push({ name: 'about', done: false });
   scripts.push({ name: 'items', done: false });
-  // scripts.push({ name: 'about', done: false });
-  // scripts.push({ name: 'about', done: false });
-  // scripts.push({ name: 'about', done: false });
 
   scripts.forEach((s) => {
     let bodyScript = document.createElement('script');

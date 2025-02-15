@@ -54,3 +54,43 @@ Once the backend has started, open your web browser to [http://127.0.0.1:8000](h
 
 ## FastAPI Swagger
 FastAPI automagically generates a Rest interface at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+
+# Code Blocks
+
+## Front Loader
+This JavaScript function dynamically loads JS files with a timestamp to prevent browser caching. Once all the JS files have been loaded the callback resumes the start up of the page.
+
+This is not something that is normally done, but can be helpful in micro and test environments.
+```javascript
+function frontLoader(callback) {
+  let scripts = [];
+
+  // Add JS files to be loaded. The js file extension is appended
+  scripts.push({ name: 'about', done: false });
+  scripts.push({ name: 'items', done: false });
+
+  scripts.forEach((s) => {
+    let bodyScript = document.createElement('script');
+    bodyScript.type = 'text/javascript';
+    bodyScript.src = '/static/' + s.name + '.js?' + Date.now();
+    bodyScript.addEventListener('load', () => {
+      let allDone = true;
+      scripts.forEach( (sSet, i, a) => {
+        if(sSet.name === s.name) {
+          sSet.done = true;
+        } else {
+          if(sSet.done === false) {
+            allDone = false;
+          }
+        }
+        if(i === a.length - 1) {
+          if(allDone === true) {
+            callback();
+          }
+        }
+      })
+    });
+    document.head.appendChild(bodyScript);
+  });
+}
+```
