@@ -38,20 +38,24 @@ source .venv/bin/activate
 ```
 
 ## Starting The Backend
-There are two ways to start it depending on preference.
+There are two ways to start it depending on preference. Only one is needed, they both start the service but
+they each have a different way of showing output. Try them both and use the one that works best for your needs.
 
 
-### Starting Uvicorn
+### Starting With Uvicorn
 [Uvicorn](https://www.uvicorn.org/) handles TCP connections much like [NodeJS](https://nodejs.org/en) is for ExpressJS.
 Starting uvicorn will start the FastAPI service.
 ```bash
 ./.venv/bin/python3 -m uvicorn main:app --reload
 ```
 
-### Starting FastAPI
+### Starting With FastAPI
 FastAPI is a backend framework much like [ExpressJS](https://expressjs.com/) is for NodeJS.
 Starting FastAPI will start uvicorn.
 
+```bash
+./.venv/bin/python3 -m fastapi dev main.py
+```
 
 ## Open The Page
 Once the backend has started, open your web browser to [http://127.0.0.1:8000](http://127.0.0.1:8000)
