@@ -1,7 +1,11 @@
 <div class="textBox">
-  <button onclick="pagination.goToPage(0);" class="btn  button-36e">First page</button>
-  <button onclick="pagination.goToPage(-1);" class="btn  button-36e">Previous page</button>
-  <button onclick="pagination.goToPage(1);" class="btn  button-36e">Next page</button>
+  <span>
+    <button onclick="pagination.goToPage(0);" class="btn  button-36e">First page</button>
+    <button onclick="pagination.goToPage(pagination.getCurrentPage() - 1);" class="btn  button-36e">Previous page</button>
+    <button onclick="pagination.goToPage(pagination.getCurrentPage() + 1);" class="btn  button-36e">Next page</button>
+    <button onclick="pagination.goToPage(pagination.getPageCount() - 1);" class="btn  button-36e">Last page</button>
+    <div id="currentPage">Page 0 of 0</div>
+  </span>
 </div>
 
 <table id="pageTable">

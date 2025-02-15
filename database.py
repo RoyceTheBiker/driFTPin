@@ -2,6 +2,7 @@ from fastapi import APIRouter
 from tinydb import TinyDB, Query
 import logging
 import re
+import math
 from os import listdir
 from os.path import isfile, isdir, os
 from pydantic import BaseModel
@@ -22,6 +23,21 @@ class Database:
     self.router.add_api_route("/items", self.getItems, methods=["GET"])
     self.router.add_api_route("/item", self.newItem, methods=["POST"])
     self.router.add_api_route("/item", self.updateItem, methods=["PUT"])
+    self.router.add_api_route("/words", self.getWords, methods=["GET"])
+
+  # Arguments of range start and end are optional and have default values if not given
+  def getWords(self, rangeStart: int = 0, rangeEnd: int = 10):
+    table = TinyDB("driFTPin.json").table("words")
+    allReturnData = sorted(table.all(), key = lambda k: k["word"])
+    pageSize = rangeEnd - rangeStart
+    returnObj = { "pagination": {
+      "currentPage": math.ceil(rangeStart / pageSize),
+      "pageCount": math.ceil(len(allReturnData) / pageSize),
+      "recordCount": len(allReturnData)
+    }, "data": allReturnData[rangeStart:rangeEnd] }
+
+    return returnObj
+
 
   # This reads the source code files to get identifiers to build a sample DB with
   def sampleWordsFromCode(self, readDir: str = "./"):
