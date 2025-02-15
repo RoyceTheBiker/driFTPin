@@ -204,3 +204,69 @@ def readIdentifiers(self, pathFile: str):
           returnSet.add(ident)
   return returnSet
 ```
+
+## Pagination For Fast Loading
+Viewing large tables is slow and can quickly overwhelm users with too much information.
+
+Pagination allows viewing smaller amounts of data page by page.
+
+The logic of Pagination is simple, define the range limits, start, size, and end; and keep track of the current page. Recalculate when navigating to another page.
+
+In this example the Python operator **lambda** is used to sort the objects. Python ``sort()`` works on simple list entries, but cannot be used here on objects.
+The lambda operator builds a function inline with given arguments. In this example the argument sets the sort key on the element value for ``word``.
+
+The pagination method returns an object with two elements, ``pagination``, and ``data``.
+
+[database.py](database.py)
+```python
+# Arguments of range start and end are optional and have default values if not given
+def getWords(self, rangeStart: int = 0, rangeEnd: int = 10):
+  table = TinyDB("driFTPin.json").table("words")
+  allReturnData = sorted(table.all(), key = lambda k: k["word"])
+  pageSize = rangeEnd - rangeStart
+  returnObj = { "pagination": {
+    "currentPage": math.ceil(rangeStart / pageSize),
+    "pageCount": math.ceil(len(allReturnData) / pageSize),
+    "recordCount": len(allReturnData)
+  }, "data": allReturnData[rangeStart:rangeEnd] }
+
+  return returnObj
+```
+
+[pagination.js](static/pagination.js)
+```javascript
+  goToPage(pageNumber) {
+    if((pageNumber < 0) || (pageNumber >= this.pageCount)) {
+      return;
+    }
+    // Open the inspection view and watch the console to see page loading times
+    console.time('goToPage');
+    this.rangeStart = pageNumber * this.rangeSize;
+    this.loadData( () => {
+      console.timeEnd('goToPage');
+    });
+  }
+
+  loadData(callback) {
+    $.getJSON('/words?rangeStart=' + this.rangeStart + '&rangeEnd=' + (this.rangeStart + this.rangeSize), (jsonData) => {
+      this.currentPage = jsonData.pagination.currentPage;
+      this.pageCount = jsonData.pagination.pageCount;
+      this.recordCount = jsonData.pagination.recordCount;
+      $('#currentPage').html('Page ' + (this.currentPage + 1) + ' of ' + this.pageCount);
+
+      let rowIndex = 0;
+      this.itemData = jsonData;
+      // blank the table
+      $('.pageTableRow').remove();
+      jsonData.data.forEach( (jD, index, array) => {
+        const oddRowClass = (rowIndex++ & 1) ? 'row-odd' : 'row-even';
+        $('#pageTable tr:last').after('<tr class="' + oddRowClass +
+          ' pageTableRow"><td>' + jD.word + '</td></tr>');
+        if(index === array.length - 1) {
+          callback();
+        }
+      });
+    });
+  }
+  ```
+
