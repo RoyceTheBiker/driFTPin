@@ -103,6 +103,7 @@ function frontLoader(callback) {
 jQuery put and post doesn't support sending JSON as an object. The JSON can be stringified to send and parsed in the backend, but the **$.ajax** function is used to send the JSON as an object.
 
 ### POST
+[items.js](static/items.js)
 ```javascript
 $.ajax({
   url: '/item',
@@ -125,6 +126,7 @@ $.ajax({
 
 The backend uses a model class **Item** to deserialize the object.
 
+[database.py](database.py)
 ```python
 class Item(BaseModel):
   name: str
@@ -148,6 +150,7 @@ PUT works almost the same as POST but to update an existing entry it needs to us
 This PUT uses the **name** field to update the entry. To locate the entry that needs to be updated,
 the **Query()** function is used to match the name field.
 
+[database.py](database.py)
 ```python
 def updateItem(self, item: Item):
   table = TinyDB("driFTPin.json").table("items")
@@ -178,6 +181,7 @@ The ``words`` table is built from the source code in this project. The goal is t
 
 These methods navigate into the local directory and read identifiers (whole words) from the code then add those words to a ``set`` of unique entries.
 
+[database.py](database.py)
 ```python
 # This reads the source code files to get identifiers to build a sample DB with
 def sampleWordsFromCode(self, readDir: str = "./"):
