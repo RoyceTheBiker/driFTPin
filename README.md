@@ -314,3 +314,26 @@ loadData(callback) {
 }
 ```
 
+## Filtering Data
+The filtering example shows how two optional fields can be sent to the backend to create a custom filter.
+
+In this code the **lambda** operator creates a function to return True if the entry is to be included or False if the entry is to be removed from the set.
+
+[database.py](database.py)
+```python
+# Build a generic filter function using lambda operator
+def buildFilter(self, fieldName, filterText):
+    return lambda dataSet: True if filterText.lower() in dataSet[fieldName].lower() else False
+
+def getFilteredItems(self, nameFilter: str = None, descriptionFilter: str = None):
+  table = TinyDB("driFTPin.json").table("items")
+  allReturnData = table.all()
+
+  if nameFilter:
+      allReturnData = list(filter(self.buildFilter("name", nameFilter), allReturnData))
+
+  if descriptionFilter:
+      allReturnData = list(filter(self.buildFilter("description", descriptionFilter), allReturnData))
+
+  return allReturnData
+```
