@@ -65,6 +65,8 @@ FastAPI automagically generates a Rest interface at [http://127.0.0.1:8000/docs]
 This JavaScript function dynamically loads JS files with a timestamp to prevent browser caching. Once all the JS files have been loaded the callback resumes the start up of the page.
 
 This is not something that is normally done but can be helpful in micro and test environments.
+
+[index.js](static/index.js)
 ```javascript
 function frontLoader(callback) {
   let scripts = [];
@@ -96,6 +98,38 @@ function frontLoader(callback) {
     });
     document.head.appendChild(bodyScript);
   });
+}
+```
+
+## Modal Popup Box
+A popup box is helpful to interact with the user without leaving the current page.
+
+This popup box can be altered to get different information from the user.
+
+The HTML remains hidden on the loaded page to be activated by JavaScript when needed.
+
+[index.html](static/index.html)
+```html
+<dialog id="modalDialog">
+  <div id="dialogDiv">Greetings, one and all!</div>
+  <form method="dialog">
+    <button onclick="if(buttonAction) { buttonAction(); }">OK</button>
+    <button id="cancelButton">Cancel</button>
+  </form>
+</dialog>
+```
+
+[index.js](static/index.js) also uses the popup box but this is the minimal code needed to use it.
+
+[about.js](static/about.js)
+```javascript
+about() {
+  $('#dialogDiv').html('This is driFTPin');
+  $('#modalDialog')[0].showModal();
+  buttonAction = () => {
+    // if the ok button is clicked this happens
+    alert('button action');
+  };
 }
 ```
 
@@ -165,6 +199,8 @@ def updateItem(self, item: Item):
 Sample data is created and saved to the **driFTPin.json** file.
 
 The ``items`` table lets the user enter three values and update the entries.
+
+[database.py](database.py)
 ```python
 db = TinyDB("driFTPin.json")
 self.log.info('Make new DB file')
