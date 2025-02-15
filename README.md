@@ -60,7 +60,7 @@ FastAPI automagically generates a Rest interface at [http://127.0.0.1:8000/docs]
 ## Front Loader
 This JavaScript function dynamically loads JS files with a timestamp to prevent browser caching. Once all the JS files have been loaded the callback resumes the start up of the page.
 
-This is not something that is normally done, but can be helpful in micro and test environments.
+This is not something that is normally done but can be helpful in micro and test environments.
 ```javascript
 function frontLoader(callback) {
   let scripts = [];
@@ -96,7 +96,7 @@ function frontLoader(callback) {
 ```
 
 ## Ajax JSON PUT & POST
-jQuery put and post don't support sending JSON as an object. The JSON can be stringified to send and the parsed in the backend, but to send the JSON as an object the **$.ajax** function is used.
+jQuery put and post doesn't support sending JSON as an object. The JSON can be stringified to send and parsed in the backend, but the **$.ajax** function is used to send the JSON as an object.
 
 ### POST
 ```javascript
