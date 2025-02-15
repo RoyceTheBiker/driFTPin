@@ -20,10 +20,27 @@ class Database:
       self.buildSampleDB()
 
     self.router = APIRouter()
+    self.router.add_api_route("/filteredItems", self.getFilteredItems, methods=["GET"])
     self.router.add_api_route("/items", self.getItems, methods=["GET"])
     self.router.add_api_route("/item", self.newItem, methods=["POST"])
     self.router.add_api_route("/item", self.updateItem, methods=["PUT"])
     self.router.add_api_route("/words", self.getWords, methods=["GET"])
+
+  # Build a generic filter function using lambda operator
+  def buildFilter(self, fieldName, filterText):
+      return lambda dataSet: True if filterText.lower() in dataSet[fieldName].lower() else False
+
+  def getFilteredItems(self, nameFilter: str = None, descriptionFilter: str = None):
+    table = TinyDB("driFTPin.json").table("items")
+    allReturnData = table.all()
+
+    if nameFilter:
+        allReturnData = list(filter(self.buildFilter("name", nameFilter), allReturnData))
+
+    if descriptionFilter:
+        allReturnData = list(filter(self.buildFilter("description", descriptionFilter), allReturnData))
+
+    return allReturnData
 
   # Arguments of range start and end are optional and have default values if not given
   def getWords(self, rangeStart: int = 0, rangeEnd: int = 10):

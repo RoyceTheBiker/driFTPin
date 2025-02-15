@@ -1,8 +1,18 @@
-<div class="textBox">
-  <button onclick="items.newItem();" class="btn  button-36b">New Item</button>
+<div class="textBox row">
+  <div class="col-auto">
+    Filter By
+  </div>
+  <div class="col-auto">
+    <label for="nameFilter" class="labelTag">Name:</label>
+    <input type="text" id="nameFilter">
+  </div>
+  <div class="col-auto">
+    <label for="descriptionFilter" class="labelTag">Description:</label>
+    <input type="text" id="descriptionFilter">
+  </div>
 </div>
 
-<table id="itemsTable">
+<table id="filteredTable">
   <thead>
     <th>Name</th>
     <th>Description</th>
