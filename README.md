@@ -1,5 +1,7 @@
 # driFTPin
-This is an example project for creating a backend using FastAPI & TinyDB.
+This is an example project for creating a backend using FastAPI & TinyDB with Python.
+
+FastAPI is a backend framework. TinyDB is a NoSQL library for local database storage.
 
 This is an example project of a micro full-stack using these backend tools as a backend framework much like
  - [FastAPI](https://fastapi.tiangolo.com/)
