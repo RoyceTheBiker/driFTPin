@@ -21,10 +21,23 @@ class Database:
 
     self.router = APIRouter()
     self.router.add_api_route("/filteredItems", self.getFilteredItems, methods=["GET"])
+    self.router.add_api_route("/mappedItems", self.getMappedItems, methods=["GET"])
     self.router.add_api_route("/items", self.getItems, methods=["GET"])
     self.router.add_api_route("/item", self.newItem, methods=["POST"])
     self.router.add_api_route("/item", self.updateItem, methods=["PUT"])
     self.router.add_api_route("/words", self.getWords, methods=["GET"])
+
+  # Build a generic filter function using the lambda operator
+  def checkQuantity(self, srcObj):
+    orderStatus = "Re-order" if int(srcObj["quantity"]) < 10 else "In stock"
+    srcObj.update({ "status": orderStatus})
+    return srcObj
+
+  def getMappedItems(self):
+    table = TinyDB("driFTPin.json").table("items")
+    allReturnData = list(map(self.checkQuantity, table.all()))
+    return allReturnData
+
 
   # Build a generic filter function using the lambda operator
   def buildFilter(self, fieldName, filterText):

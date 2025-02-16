@@ -13,6 +13,7 @@ function frontLoader(callback) {
   scripts.push({ name: 'items', done: false });
   scripts.push({ name: 'pagination', done: false });
   scripts.push({ name: 'filtering', done: false });
+  scripts.push({ name: 'mapping', done: false });
 
   scripts.forEach((s) => {
     let bodyScript = document.createElement('script');
