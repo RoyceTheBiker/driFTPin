@@ -395,7 +395,7 @@ async def read_static(fileName: str, folderName: str = None):
   return serve_file("static", fileName, folderName)
 ```
 
-With most of the endpoints in this example being database related, it is better for code readability and maintenance to have the endpoints in the [database.py](database.py) class. This is done using the APIrouter class that is part of FastAPI.
+With most of the endpoints in this example being database-related, it is better for code readability and maintenance to have the endpoints in the [database.py](database.py) class. This is done using the APIRouter class that is part of FastAPI.
 
 ```python
 self.router = APIRouter()
@@ -409,7 +409,7 @@ self.router.add_api_route("/words", self.getWords, methods=["GET"])
 
 Each endpoint is assigned to a member inside the **Database** class.
 
-The endpoint ``/items`` is assigned to multiple members because they each have a distinct method associated.
+The endpoint ``/items`` is assigned to multiple members because they each have a distinct method associated with it.
 
 With the endpoints defined in the class, the [main.py](main.py) must add the instances router to the main app once the class is instantiated.
 
