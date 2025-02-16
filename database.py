@@ -27,7 +27,7 @@ class Database:
     self.router.add_api_route("/item", self.updateItem, methods=["PUT"])
     self.router.add_api_route("/words", self.getWords, methods=["GET"])
 
-  # Build a generic filter function using the lambda operator
+  # Check the quantity and set the status field
   def checkQuantity(self, srcObj):
     orderStatus = "Re-order" if int(srcObj["quantity"]) < 10 else "In stock"
     srcObj.update({ "status": orderStatus})

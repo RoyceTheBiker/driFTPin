@@ -27,15 +27,6 @@ class Mapping {
     $.get('/static/mapping.html', (pageData) => {
       $('#contentDiv').html(pageData);
 
-      // Set the change event for the filter input boxes
-      $('#nameFilter').on('input', () => {
-        this.loadData();
-      });
-      $('#descriptionFilter').on('input', () => {
-        this.loadData();
-      });
-
-
       this.loadData(() => {
         console.timeEnd('loadMappingTable');
       });

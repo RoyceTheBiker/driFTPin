@@ -39,6 +39,8 @@ but you are free to expand on this open-source project and let me know what you 
 * 9. [Sample Data](#SampleData)
 * 10. [Pagination For Fast Loading](#PaginationForFastLoading)
 * 11. [Filtering Data](#FilteringData)
+* 12. [Mapping Data](#MappingData)
+* 13. [Router Endpoints In A Class](#RouterEndpoints)
 
 <!-- vscode-markdown-toc-config
 	numbering=true
@@ -360,4 +362,58 @@ def getFilteredItems(self, nameFilter: str = None, descriptionFilter: str = None
       allReturnData = list(filter(self.buildFilter("description", descriptionFilter), allReturnData))
 
   return allReturnData
+```
+
+##  12. <a name="MappingData"></a>Mapping Data
+The **map** iterates over an array and returns a new array. This example uses map to transform the [dict](https://www.w3schools.com/python/python_datatypes.asp) **items** to add a new key and value to each element.
+
+[database.py](database.py)
+```python
+# Check the quantity and set the status field
+def checkQuantity(self, srcObj):
+  orderStatus = "Re-order" if int(srcObj["quantity"]) < 10 else "In stock"
+  srcObj.update({ "status": orderStatus})
+  return srcObj
+
+def getMappedItems(self):
+  table = TinyDB("driFTPin.json").table("items")
+  allReturnData = list(map(self.checkQuantity, table.all()))
+  return allReturnData
+```
+
+##  13. <a name="RouterEndpoints"></a>Router Endpoints In A Class
+The [main.py](main.py) only has two endpoints to serve the static frontend files.
+
+```python
+@app.get("/")
+async def read_index():
+  return FileResponse('static/index.html')
+
+@app.get("/static/{fileName}")
+@app.get("/static/{folderName}/{fileName}")
+async def read_static(fileName: str, folderName: str = None):
+  return serve_file("static", fileName, folderName)
+```
+
+With most of the endpoints in this example being database related, it is better for code readability and maintenance to have the endpoints in the [database.py](database.py) class. This is done using the APIrouter class that is part of FastAPI.
+
+```python
+self.router = APIRouter()
+self.router.add_api_route("/filteredItems", self.getFilteredItems, methods=["GET"])
+self.router.add_api_route("/mappedItems", self.getMappedItems, methods=["GET"])
+self.router.add_api_route("/items", self.getItems, methods=["GET"])
+self.router.add_api_route("/item", self.newItem, methods=["POST"])
+self.router.add_api_route("/item", self.updateItem, methods=["PUT"])
+self.router.add_api_route("/words", self.getWords, methods=["GET"])
+```
+
+Each endpoint is assigned to a member inside the **Database** class.
+
+The endpoint ``/items`` is assigned to multiple members because they each have a distinct method associated.
+
+With the endpoints defined in the class, the [main.py](main.py) must add the instances router to the main app once the class is instantiated.
+
+```python
+dBase = Database("Database", log)
+app.include_router(dBase.router)
 ```

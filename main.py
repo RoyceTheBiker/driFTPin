@@ -22,13 +22,10 @@ app.include_router(dBase.router)
 async def read_index():
   return FileResponse('static/index.html')
 
-
 @app.get("/static/{fileName}")
 @app.get("/static/{folderName}/{fileName}")
 async def read_static(fileName: str, folderName: str = None):
   return serve_file("static", fileName, folderName)
-
-
 
 def serve_file(pathName: str, fileName: str, folderName: str = None):
   if folderName:
