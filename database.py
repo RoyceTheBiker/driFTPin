@@ -150,3 +150,16 @@ class Database:
   def fileSaved(self, formData: UploadFile):
     table = TinyDB("driFTPin.json").table("uploads")
     table.insert({ "filename": formData.filename, "size": formData.size, "type": formData.content_type})
+
+  def getSavedFiles(self):
+    table = TinyDB("driFTPin.json").table("uploads")
+    return table.all()
+
+  def lookupFile(self, filename: str):
+    if filename:
+      table = TinyDB("driFTPin.json").table("uploads")
+      fileEntry = table.search(Query().filename == filename)
+      if fileEntry and fileEntry[0]:
+        return fileEntry[0]["filename"]
+      else:
+        return None

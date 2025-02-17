@@ -396,7 +396,38 @@ hr {
   touch-action: manipulation;
 }
 
+.fileCards {
+  overflow: hidden;
+}
+
 .button-36f:hover {
   box-shadow: rgba(63, 151, 205, 0.5) 0 1px 30px;
   transition-duration: .1s;
 }
+
+.fileCard {
+  width: 200px;
+  height: 250px;
+  padding: 10px;
+  margin: 10px;
+  float: left;
+  background-image: linear-gradient(0.88deg, #93a7bd 9.16%, #438acc 43.89%, #b0cadf 64.72%);
+}
+
+.fileCard .title {
+  color: #360707;
+  font-size: 2em;
+  font-weight: bold;
+};
+
+.fileCard .sizeInfo {
+  color: #0d123a;
+  font-size: .5em;
+};
+
+.fileCard .typeInfo {
+  color: #0d3a2b;
+  font-size: .5em;
+};
+
+

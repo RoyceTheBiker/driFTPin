@@ -61,3 +61,19 @@ async def uploadFile(formData: UploadFile):
 
   return {"message": f"Successfully uploaded {formData.filename}"}
 
+@app.get("/uploaded")
+async def getUploaded():
+  return dBase.getSavedFiles()
+
+@app.get("/download/{filename}")
+async def getFile(filename: str):
+  try:
+    qualifiedFilename = dBase.lookupFile(filename)
+    # Only allow downloading of a file that was previously uploaded.
+    if qualifiedFilename:
+      return FileResponse('uploads/' + qualifiedFilename)
+    else:
+      raise HTTPException(status_code=404, detail="File not found")
+
+  except Exception as error:
+    log.error(f"File download {error}")
