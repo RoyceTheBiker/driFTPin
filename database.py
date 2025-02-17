@@ -70,24 +70,26 @@ class Database:
 
 
   # This reads the source code files to get identifiers to build a sample DB with
-  def sampleWordsFromCode(self, readDir: str = "./"):
+  def sampleWordsFromCode(self, readDir: str = "", recursionLimit: int = 2):
     # Use a set to only add unique values
     words = set([])
+    if not recursionLimit > 0:
+      return words
+    
     for entry in listdir(path=readDir):
-      if isfile(entry):
-        for nE in self.readIdentifiers(entry):
+      if isfile(readDir + "/" + entry):
+        for nE in self.readIdentifiers(readDir + "/" +entry):
           words.add(nE)
 
-      if isdir(entry):
-        self.log.debug("sample dir")
-        self.sampleWordsFromCode(entry)
+      if isdir(readDir + "/" + entry):
+        for nE in self.sampleWordsFromCode(readDir + "/" + entry, recursionLimit - 1):
+          words.add(nE)
 
     return words
 
   def readIdentifiers(self, pathFile: str):
     # Use a set to only add unique values
     returnSet = set([])
-    self.log.debug(f"readIdentifiers {pathFile}")
     with open(pathFile, "r") as readFile: 
       try:
         for line in readFile:
@@ -120,7 +122,7 @@ class Database:
 
     table = db.table("words")
     index = 0
-    for w in self.sampleWordsFromCode("./"):
+    for w in self.sampleWordsFromCode("."):
       table.insert({ "id": index, "word": w})
       index += 1
 
