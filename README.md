@@ -250,16 +250,20 @@ These methods navigate into the local directory and read identifiers (whole word
 [database.py](database.py)
 ```python
 # This reads the source code files to get identifiers to build a sample DB with
-def sampleWordsFromCode(self, readDir: str = "./"):
+def sampleWordsFromCode(self, readDir: str = "", recursionLimit: int = 2):
   # Use a set to only add unique values
   words = set([])
+  if not recursionLimit > 0:
+    return words
+
   for entry in listdir(path=readDir):
-    if isfile(entry):
-      for nE in self.readIdentifiers(entry):
+    if isfile(readDir + "/" + entry):
+      for nE in self.readIdentifiers(readDir + "/" +entry):
         words.add(nE)
 
-    if isdir(entry):
-      self.sampleWordsFromCode(entry)
+    if isdir(readDir + "/" + entry):
+      for nE in self.sampleWordsFromCode(readDir + "/" + entry, recursionLimit - 1):
+        words.add(nE)
 
   return words
 
