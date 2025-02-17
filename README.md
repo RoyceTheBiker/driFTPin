@@ -41,6 +41,7 @@ but you are free to expand on this open-source project and let me know what you 
 * 11. [Filtering Data](#FilteringData)
 * 12. [Mapping Data](#MappingData)
 * 13. [Router Endpoints In A Class](#RouterEndpoints)
+* 14. [Upload And Download Files](#UploadAndDownloadFiles)
 
 <!-- vscode-markdown-toc-config
 	numbering=true
@@ -426,4 +427,116 @@ With the endpoints defined in the class, the [main.py](main.py) must add the ins
 ```python
 dBase = Database("Database", log)
 app.include_router(dBase.router)
+```
+
+##  14. <a name="UploadAndDownloadFiles"></a>Upload And Download Files
+The current HTML page needs a **#file** element to activate the browser file upload dialog. It is hidden to allow a styled button to activate it in JavaScript.
+
+[index.hmtl](./static/index.html)
+```html
+<!-- Required for file upload to work -->
+<input type="file" id="uploadFileInput" #file class="file-upload"
+  style="display:none" onchange="uploading.uploadFileEvent(this.value)">
+```
+
+[uploading.js](./static/uploading.js)
+```javascript
+newUpload() {
+  // Send a click event to the hidden input in index.html
+  $('#uploadFileInput').click();
+}
+
+uploadFileEvent(fileName) {
+  // Dynamically build a Form to send the file inside of
+  let formData = new FormData();
+  formData.append("formData", $("#uploadFileInput").prop("files")[0], fileName);
+  formData.append("upload_file", true);
+
+  $.ajax({
+    type: 'POST',
+    url: '/uploadFile',
+    enctype: 'multipart/form-data',
+    contentType: false,
+    processData: false,
+    cache: false,
+    data: formData,
+    success: function () {
+      populateProjectsTable();
+    },
+    error: () => {
+      console.error('Dang!');
+    }
+  });
+}
+```
+
+[main.py](./main.py)
+```python
+@app.post("/uploadFile")
+async def uploadFile(formData: UploadFile):
+  try:
+    Path("uploads").mkdir(parents=True, exist_ok=True, mode=0o700)
+    with open("uploads/" + formData.filename, 'wb') as f:
+      f.write(await formData.read())
+      f.close()
+    dBase.fileSaved(formData)
+  except Exception as e:
+    log.error(f"uploadFile {e=}")
+    raise HTTPException(status_code=500, detail='Something went wrong')
+
+  return {"message": f"Successfully uploaded {formData.filename}"}
+```
+
+Once the file has been successfully saved, an entry is made in the DB.
+[database.py](./database.py)
+```python
+def fileSaved(self, formData: UploadFile):
+  table = TinyDB("driFTPin.json").table("uploads")
+  table.insert({ "filename": formData.filename, "size": formData.size, "type": formData.content_type})
+```
+
+To download a file the backend provides a list of files that have been uploaded.
+
+[main.py](./main.py)
+```python
+@app.get("/uploaded")
+async def getUploaded():
+  return dBase.getSavedFiles()
+```
+
+[database.py](./database.py)
+```python
+def getSavedFiles(self):
+  table = TinyDB("driFTPin.json").table("uploads")
+  return table.all()
+```
+
+When the user clicks on a link to download a file, the ``main.py`` confirms that filename had been uploaded before returning it.
+
+[main.py](./main.py)
+```python
+@app.get("/download/{filename}")
+async def getFile(filename: str):
+  try:
+    qualifiedFilename = dBase.lookupFile(filename)
+    # Only allow downloading of a file that was previously uploaded.
+    if qualifiedFilename:
+      return FileResponse('uploads/' + qualifiedFilename)
+    else:
+      raise HTTPException(status_code=404, detail="File not found")
+
+  except Exception as error:
+    log.error(f"File download {error}")
+```
+
+[database.py](./database.py)
+```python
+def lookupFile(self, filename: str):
+  if filename:
+    table = TinyDB("driFTPin.json").table("uploads")
+    fileEntry = table.search(Query().filename == filename)
+    if fileEntry and fileEntry[0]:
+      return fileEntry[0]["filename"]
+
+  return None
 ```

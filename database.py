@@ -171,5 +171,5 @@ class Database:
       fileEntry = table.search(Query().filename == filename)
       if fileEntry and fileEntry[0]:
         return fileEntry[0]["filename"]
-      else:
-        return None
+
+    return None
