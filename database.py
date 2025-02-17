@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, UploadFile
 from tinydb import TinyDB, Query
 import logging
 import re
@@ -147,3 +147,6 @@ class Database:
     }, Query().name == item.name)
     return "ok"
 
+  def fileSaved(self, formData: UploadFile):
+    table = TinyDB("driFTPin.json").table("uploads")
+    table.insert({ "filename": formData.filename, "size": formData.size, "type": formData.content_type})

@@ -1,9 +1,10 @@
 from database import Database
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile
 from starlette.responses import FileResponse
 import logging
 from os import listdir
 from os.path import isfile, isdir
+from pathlib import Path
 
 log = logging.getLogger("uvicorn")
 log.setLevel(logging.DEBUG)
@@ -44,3 +45,19 @@ def serve_file(pathName: str, fileName: str, folderName: str = None):
     return FileResponse('static/' + fileName)
 
   raise HTTPException(status_code=404, detail="Item not found")
+
+
+@app.post("/uploadFile")
+async def uploadFile(formData: UploadFile):
+  try:
+    Path("uploads").mkdir(parents=True, exist_ok=True, mode=0o700)
+    with open("uploads/" + formData.filename, 'wb') as f:
+      f.write(await formData.read())
+      f.close()
+    dBase.fileSaved(formData)
+  except Exception as e:
+    log.error(f"uploadFile {e=}")
+    raise HTTPException(status_code=500, detail='Something went wrong')
+
+  return {"message": f"Successfully uploaded {formData.filename}"}
+

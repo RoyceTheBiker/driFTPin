@@ -54,6 +54,7 @@
       <button onclick="pagination.loadPageableTable();" class="btn button-36">Pagination</button>
       <button onclick="filtering.loadFilteringTable();" class="btn button-36c">Filtering</button>
       <button onclick="mapping.loadMappingTable();" class="btn button-36d">Mapping</button>
+      <button onclick="uploading.loadUploadingTable();" class="btn button-36d">Uploading</button>
       <button onclick="about.about();" class="btn  button-36e">About</button>
     </div>
     <div id="contentDiv">
@@ -71,7 +72,7 @@
 
   <!-- Required for file upload to work -->
   <input type="file" id="uploadFileInput" #file class="file-upload"
-    style="display:none" onchange="uploadFileEvent(this.value)">
+    style="display:none" onchange="uploading.uploadFileEvent(this.value)">
 
   <!-- Required for file download to work  -->
   <iframe id="download_iframe" style="display:none;"></iframe>
