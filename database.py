@@ -79,6 +79,7 @@ class Database:
           words.add(nE)
 
       if isdir(entry):
+        self.log.debug("sample dir")
         self.sampleWordsFromCode(entry)
 
     return words
@@ -86,12 +87,19 @@ class Database:
   def readIdentifiers(self, pathFile: str):
     # Use a set to only add unique values
     returnSet = set([])
-    with open(pathFile, "r") as readFile:
-      for line in readFile:
-        for ident in re.split('[^a-zA-Z]', line):
-          # Only words longer than 4 letters
-          if len(ident) > 4:
-            returnSet.add(ident)
+    self.log.debug(f"readIdentifiers {pathFile}")
+    with open(pathFile, "r") as readFile: 
+      try:
+        for line in readFile:
+          for ident in re.split('[^a-zA-Z]', line):
+            # Only words longer than 4 letters
+            if len(ident) > 4:
+              returnSet.add(ident)
+
+      # Don't error if file is not readable text, like png and xcf files.
+      except:
+        pass
+
     return returnSet
 
   def buildSampleDB(self):
