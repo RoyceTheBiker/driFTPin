@@ -75,7 +75,7 @@ class Database:
     words = set([])
     if not recursionLimit > 0:
       return words
-    
+
     for entry in listdir(path=readDir):
       if isfile(readDir + "/" + entry):
         for nE in self.readIdentifiers(readDir + "/" +entry):
@@ -90,7 +90,7 @@ class Database:
   def readIdentifiers(self, pathFile: str):
     # Use a set to only add unique values
     returnSet = set([])
-    with open(pathFile, "r") as readFile: 
+    with open(pathFile, "r") as readFile:
       try:
         for line in readFile:
           for ident in re.split('[^a-zA-Z]', line):
@@ -99,7 +99,7 @@ class Database:
               returnSet.add(ident)
 
       # Don't error if file is not readable text, like png and xcf files.
-      except:
+      except Exception:
         pass
 
     return returnSet

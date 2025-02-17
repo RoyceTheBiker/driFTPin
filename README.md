@@ -271,11 +271,17 @@ def readIdentifiers(self, pathFile: str):
   # Use a set to only add unique values
   returnSet = set([])
   with open(pathFile, "r") as readFile:
-    for line in readFile:
-      for ident in re.split('[^a-zA-Z]', line):
-        # Only words longer than 4 letters
-        if len(ident) > 4:
-          returnSet.add(ident)
+    try:
+      for line in readFile:
+        for ident in re.split('[^a-zA-Z]', line):
+          # Only words longer than 4 letters
+          if len(ident) > 4:
+            returnSet.add(ident)
+
+    # Don't error if file is not readable text, like png and xcf files.
+    except Exception:
+      pass
+
   return returnSet
 ```
 
