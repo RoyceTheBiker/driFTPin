@@ -42,6 +42,8 @@ but you are free to expand on this open-source project and let me know what you 
 * 12. [Mapping Data](#MappingData)
 * 13. [Router Endpoints In A Class](#RouterEndpoints)
 * 14. [Upload And Download Files](#UploadAndDownloadFiles)
+  * 14.1. [Uploading](#Uploading)
+  * 14.2. [Downloading](#Downloading)
 
 <!-- vscode-markdown-toc-config
 	numbering=true
@@ -430,6 +432,7 @@ app.include_router(dBase.router)
 ```
 
 ##  14. <a name="UploadAndDownloadFiles"></a>Upload And Download Files
+###  14.1. <a name="Uploading"></a>Uploading
 The current HTML page needs a **#file** element to activate the browser file upload dialog. It is hidden to allow a styled button to activate it in JavaScript.
 
 [index.hmtl](./static/index.html)
@@ -487,7 +490,9 @@ async def uploadFile(formData: UploadFile):
   return {"message": f"Successfully uploaded {formData.filename}"}
 ```
 
+###  14.2. <a name="Downloading"></a>Downloading
 Once the file has been successfully saved, an entry is made in the DB.
+
 [database.py](./database.py)
 ```python
 def fileSaved(self, formData: UploadFile):
