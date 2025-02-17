@@ -31,9 +31,10 @@ class Uploading {
   }
 
   downloadFile(filename) {
-    console.log('download filename %s', filename);
-    $('#download_anchor').attr( {target: '_blank', href: '/download/' + filename });
-
+    const link = document.createElement('a');
+    link.setAttribute('download', filename);
+    link.setAttribute('href', '/download/' + filename);
+    link.click();
   }
 
   loadData(callback) {
