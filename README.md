@@ -191,14 +191,14 @@ $.ajax({
 });
 ```
 
-The backend uses a model class **Item** to deserialize the object.
+The backend uses a model class **Item** to deserialize the object. The **Optional** definer allows the JSON to not include the defined value and accept the JSON with null or missing values.
 
 [database.py](database.py)
 ```python
 class Item(BaseModel):
-  name: str
-  description: str
-  quantity: str
+  name: Optional[str] = None
+  description: Optional[str] = None
+  quantity: Optional[str] = None
 
 def newItem(self, item: Item):
   # Using the formatted string Python can deserialize JSON data using the = after the variable name

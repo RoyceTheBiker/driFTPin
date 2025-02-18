@@ -6,6 +6,7 @@ import math
 from os import listdir
 from os.path import isfile, isdir, os
 from pydantic import BaseModel
+from typing import Optional
 
 class Database:
   def __init__(self, name: str, log: logging):
@@ -134,9 +135,9 @@ class Database:
     return table.all()
 
   class Item(BaseModel):
-    name: str
-    description: str
-    quantity: str
+    name: Optional[str] = None
+    description: Optional[str] = None
+    quantity: Optional[str] = None
 
   def newItem(self, item: Item):
     # Using the formatted string Python can deserialize JSON data using the = after the variable name
