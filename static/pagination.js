@@ -4,6 +4,7 @@ class Pagination {
   recordCount = 0;
   rangeStart = 0;
   rangeSize = 10;
+  sorting = '';
 
   constructor() {}
 
@@ -17,6 +18,21 @@ class Pagination {
     this.loadData( () => {
       console.timeEnd('goToPage');
     });
+  }
+
+  sortBy(field, direction) {
+    if(this.sorting) {
+      $('#' + this.sorting).removeClass('sorting');
+      $('#' + this.sorting).addClass('notsorting');
+    }
+    if(this.sorting === field + '_' + direction) {
+      // Turn sorting off and reload the table
+      this.sorting = '';
+    } else {
+      this.sorting = field + '_' + direction;
+      $('#' + this.sorting).removeClass('notsorting');
+      $('#' + this.sorting).addClass('sorting');
+    }
   }
 
   loadData(callback) {
