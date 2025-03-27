@@ -82,6 +82,7 @@ class Database:
   def sampleWordsFromCode(self, readDir: str = "", recursionLimit: int = 2):
     # Use a set to only add unique values
     words = set([])
+
     if not recursionLimit > 0:
       return words
 
@@ -132,7 +133,7 @@ class Database:
     table = db.table("words")
     index = 0
     for w in self.sampleWordsFromCode("."):
-      table.insert({ "id": index, "word": w})
+      table.insert({ "id": index, "word": w, "len": len(w), "vowels": self.countVowels(w) })
       index += 1
 
     db.close()
