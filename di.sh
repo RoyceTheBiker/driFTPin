@@ -3,6 +3,12 @@
 # This is not for you. The project does not use this. This how I start my dev setup
 # https://stackoverflow.com/questions/8537149/how-to-start-tmux-with-several-windows-in-different-directories
 
+[ ! -d .venv ] && {
+    python3 -m venv .venv
+    source .venv/bin/activate
+    .venv/bin/pip install tinydb uvicorn "fastapi[standard]"
+}
+
 vscode ./
 open http://127.0.0.1:8000 &
 
@@ -17,3 +23,5 @@ tmux new-window -t "driFTPin:2" -n shell
 
 # Attach to the tmux session
 tmux attach -d -t driFTPin:uvicorn
+
+
