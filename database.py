@@ -69,6 +69,14 @@ class Database:
 
     return returnObj
 
+  def countVowels(self, word: str):
+    returnVal = 0
+    vowels = ["a", "e", "i", "o", "u", "y"]
+    for l in word.lower():
+      if l in vowels:
+        returnVal += 1
+
+    return returnVal
 
   # This reads the source code files to get identifiers to build a sample DB with
   def sampleWordsFromCode(self, readDir: str = "", recursionLimit: int = 2):
