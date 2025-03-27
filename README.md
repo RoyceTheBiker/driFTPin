@@ -105,32 +105,27 @@ function frontLoader(callback) {
   let scripts = [];
 
   // Add JS files to be loaded. The js file extension is appended
-  scripts.push({ name: 'about', done: false });
-  scripts.push({ name: 'items', done: false });
+  scripts.push('about');
+  scripts.push('items');
+  scripts.push('pagination');
+  scripts.push('filtering');
+  scripts.push('mapping');
+  scripts.push('uploading');
 
-  scripts.forEach((s) => {
+  let sequenceLoader = (scriptUri) => {
     let bodyScript = document.createElement('script');
     bodyScript.type = 'text/javascript';
-    bodyScript.src = '/static/' + s.name + '.js?' + Date.now();
+    bodyScript.src = '/static/' + scriptUri + '.js?' + Date.now();
     bodyScript.addEventListener('load', () => {
-      let allDone = true;
-      scripts.forEach( (sSet, i, a) => {
-        if(sSet.name === s.name) {
-          sSet.done = true;
-        } else {
-          if(sSet.done === false) {
-            allDone = false;
-          }
-        }
-        if(i === a.length - 1) {
-          if(allDone === true) {
-            callback();
-          }
-        }
-      })
+      if(scripts.length > 0) {
+        sequenceLoader(scripts.shift());
+      } else {
+        callback();
+      }
     });
     document.head.appendChild(bodyScript);
-  });
+  }
+  sequenceLoader(scripts.shift());
 }
 ```
 
