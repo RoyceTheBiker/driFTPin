@@ -32,8 +32,9 @@ class Pagination {
       $('.pageTableRow').remove();
       jsonData.data.forEach( (jD, index, array) => {
         const oddRowClass = (rowIndex++ & 1) ? 'row-odd' : 'row-even';
-        $('#pageTable tr:last').after('<tr class="' + oddRowClass +
-          ' pageTableRow"><td>' + jD.word + '</td></tr>');
+        let newRow = '<tr class="' + oddRowClass + ' pageTableRow"><td>' + jD.word + '</td>';
+        newRow += '<td>' + jD.len + '</td><td>' + jD.vowels + '</td></tr>';
+        $('#pageTable tr:last').after(newRow);
         if(index === array.length - 1) {
           callback();
         }
