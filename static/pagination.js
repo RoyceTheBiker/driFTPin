@@ -33,6 +33,9 @@ class Pagination {
       $('#' + this.sorting).removeClass('notsorting');
       $('#' + this.sorting).addClass('sorting');
     }
+    // Changing sort resets page
+    this.rangeStart = 0;
+    
     console.time('sort by');
     this.loadData( () => {
       console.timeEnd('sort by');
@@ -43,7 +46,7 @@ class Pagination {
     let requestArgs = '?rangeStart=' + this.rangeStart;
     requestArgs += '&rangeEnd=' + (this.rangeStart + this.rangeSize);
     if(this.sorting) {
-      requestArgs += '?sorting=' + this.sorting;
+      requestArgs += '&sorting=' + this.sorting;
     }
     $.getJSON('/words' + requestArgs, (jsonData) => {
       this.currentPage = jsonData.pagination.currentPage;
