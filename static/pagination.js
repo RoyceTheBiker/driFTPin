@@ -33,10 +33,19 @@ class Pagination {
       $('#' + this.sorting).removeClass('notsorting');
       $('#' + this.sorting).addClass('sorting');
     }
+    console.time('sort by');
+    this.loadData( () => {
+      console.timeEnd('sort by');
+    })
   }
 
   loadData(callback) {
-    $.getJSON('/words?rangeStart=' + this.rangeStart + '&rangeEnd=' + (this.rangeStart + this.rangeSize), (jsonData) => {
+    let requestArgs = '?rangeStart=' + this.rangeStart;
+    requestArgs += '&rangeEnd=' + (this.rangeStart + this.rangeSize);
+    if(this.sorting) {
+      requestArgs += '?sorting=' + this.sorting;
+    }
+    $.getJSON('/words' + requestArgs, (jsonData) => {
       this.currentPage = jsonData.pagination.currentPage;
       this.pageCount = jsonData.pagination.pageCount;
       this.recordCount = jsonData.pagination.recordCount;
