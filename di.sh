@@ -13,10 +13,12 @@
 open http://127.0.0.1:8000 &
 
 # Create new session with a running backend
-tmux new-session -s driFTPin -n uvicorn -d './.venv/bin/python3 -m uvicorn main:app --reload'
+tmux new-session -s driFTPin -n Shell -d "${SHELL}"
+
+tmux new-window -t "driFTPin:1" -n uvicorn -d './.venv/bin/python3 -m uvicorn main:app --reload'
 
 # Add a second window with git tool
-tmux new-window -t "driFTPin:1" -n NeoVim 'nvim'
+tmux new-window -t "driFTPin:2" -n NeoVim 'nvim'
 
 # Add a third window with shell
 tmux new-window -t "driFTPin:2" -n shell
