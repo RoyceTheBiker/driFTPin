@@ -57,9 +57,15 @@ class Database:
     return allReturnData
 
   # Arguments of range start and end are optional and have default values if not given
-  def getWords(self, rangeStart: int = 0, rangeEnd: int = 10):
+  def getWords(self, rangeStart: int = 0, rangeEnd: int = 10, sorting: Optional[str] = None):
     table = TinyDB("driFTPin.json").table("words")
-    allReturnData = sorted(table.all(), key = lambda k: k["word"])
+    sortField, sortDirection = "word_asc".split("_")
+    sortReversed = False
+    if not sorting == None:
+        sortField, sortDirection = sorting.split("_")
+        if sortDirection == "desc":
+            sortReversed = True
+    allReturnData = sorted(table.all(), key = lambda k: k[sortField], reverse = sortReversed)
     pageSize = rangeEnd - rangeStart
     returnObj = { "pagination": {
       "currentPage": math.ceil(rangeStart / pageSize),
@@ -124,11 +130,20 @@ class Database:
     table = db.table("words")
     index = 0
     for w in self.sampleWordsFromCode("."):
-      table.insert({ "id": index, "word": w})
-      index += 1
+         table.insert({ "id": index, "word": w, "len": len(w), "vowels": self.countVowels(w)})
+         index += 1
 
     db.close()
     self.log.info(f"Sample DB has been built. The 'words' table contains {index} entries.")
+
+  def countVowels(self, word: str):
+        returnVal = 0
+        vowels = ["a", "e", "i", "o", "u", "y"]
+        for i in word.lower():
+            if i in vowels:
+                returnVal += 1
+        return returnVal
+
 
   def getItems(self):
     table = TinyDB("driFTPin.json").table("items")

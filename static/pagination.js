@@ -4,6 +4,7 @@ class Pagination {
   recordCount = 0;
   rangeStart = 0;
   rangeSize = 10;
+  sorting = '';
 
   constructor() {}
 
@@ -20,7 +21,13 @@ class Pagination {
   }
 
   loadData(callback) {
-    $.getJSON('/words?rangeStart=' + this.rangeStart + '&rangeEnd=' + (this.rangeStart + this.rangeSize), (jsonData) => {
+    // $.getJSON('/words?rangeStart=' + this.rangeStart + '&rangeEnd=' + (this.rangeStart + this.rangeSize), (jsonData) => {
+    let requestArgs = '?rangeStart=' + this.rangeStart;
+    requestArgs += '&rangeEnd=' + (this.rangeStart + this.rangeSize);
+    if(this.sorting) {
+      requestArgs += '&sorting=' + this.sorting;
+    }
+    $.getJSON('/words' + requestArgs, (jsonData) => {
       this.currentPage = jsonData.pagination.currentPage;
       this.pageCount = jsonData.pagination.pageCount;
       this.recordCount = jsonData.pagination.recordCount;
@@ -32,12 +39,36 @@ class Pagination {
       $('.pageTableRow').remove();
       jsonData.data.forEach( (jD, index, array) => {
         const oddRowClass = (rowIndex++ & 1) ? 'row-odd' : 'row-even';
-        $('#pageTable tr:last').after('<tr class="' + oddRowClass +
-          ' pageTableRow"><td>' + jD.word + '</td></tr>');
+        let newRow = '<tr class="' + oddRowClass + ' pageTableRow">';
+        newRow += '<td>' + jD.word + '</td><td>' + jD.len + '</td>';
+        newRow += '<td>' + jD.vowels + '</td>';
+        $('#pageTable tr:last').after(newRow);
         if(index === array.length - 1) {
           callback();
         }
       });
+    });
+  }
+
+  sortBy(field, direction) {
+    if(this.sorting) {
+      $('#' + this.sorting).removeClass('sorting');
+      $('#' + this.sorting).addClass('notsorting');
+    }
+    if(this.sorting === field + '_' + direction) {
+      // Turn sorting off and reload the table.
+      this.sorting = '';
+    } else {
+      this.sorting = field + '_' + direction;
+      $('#' + this.sorting).removeClass('notsorting');
+      $('#' + this.sorting).addClass('sorting');
+    }
+    // Changing sort resets page.
+    this.rangeStart = 0;
+
+    console.time('sortBy');
+    this.loadData( () => {
+      console.timeEnd('sortBy');
     });
   }
 

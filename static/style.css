@@ -418,16 +418,23 @@ hr {
   color: #360707;
   font-size: 2em;
   font-weight: bold;
-};
+}
 
 .fileCard .sizeInfo {
   color: #0d123a;
   font-size: .5em;
-};
+}
 
 .fileCard .typeInfo {
   color: #0d3a2b;
   font-size: .5em;
-};
+}
 
+.notsorting {
+  color: grey;
+}
+
+.sorting {
+  color: green;
+}
 
