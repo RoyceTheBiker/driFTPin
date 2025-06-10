@@ -63,8 +63,8 @@ class Database:
     if not sorting == None:
         sortField, sortDirection = sorting.split("_")
         if sortDirection == "desc":
-                sortReversed = True
-    allReturnData = sorted(table.all(), key = lambda k: k[sortField], reverse=sortReversed)
+            sortReversed = True
+    allReturnData = sorted(table.all(), key = lambda k: k[sortField], reverse = sortReversed)
     pageSize = rangeEnd - rangeStart
     returnObj = { "pagination": {
       "currentPage": math.ceil(rangeStart / pageSize),
@@ -143,6 +143,15 @@ class Database:
 
     db.close()
     self.log.info(f"Sample DB has been built. The 'words' table contains {index} entries.")
+
+  def countVowels(self, word: str):
+        returnVal = 0
+        vowels = ["a", "e", "i", "o", "u", "y"]
+        for i in word.lower():
+            if i in vowels:
+                returnVal += 1
+        return returnVal
+
 
   def getItems(self):
     table = TinyDB("driFTPin.json").table("items")
