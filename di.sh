@@ -3,6 +3,15 @@
 # This is not for you. The project does not use this. This how I start my dev setup
 # https://stackoverflow.com/questions/8537149/how-to-start-tmux-with-several-windows-in-different-directories
 
+git diff-index --quiet HEAD -- && {
+  # Make sure we are working with the latest copy.
+  git pull
+} || {
+  echo "This project has un-commited changes."
+  echo "Don't forget to post and commit your changes."
+  sleep 10
+}
+
 [ ! -d .venv ] && {
   python3 -m venv .venv
   source .venv/bin/activate

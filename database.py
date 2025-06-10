@@ -39,7 +39,6 @@ class Database:
     allReturnData = list(map(self.checkQuantity, table.all()))
     return allReturnData
 
-
   # Build a generic filter function using the lambda operator
   def buildFilter(self, fieldName, filterText):
       return lambda dataSet: True if filterText.lower() in dataSet[fieldName].lower() else False
