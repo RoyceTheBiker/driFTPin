@@ -15,6 +15,7 @@ function frontLoader(callback) {
   scripts.push('filtering');
   scripts.push('mapping');
   scripts.push('uploading');
+  scripts.push('settings');
 
   let sequenceLoader = (scriptUri) => {
     let bodyScript = document.createElement('script');

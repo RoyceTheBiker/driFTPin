@@ -1,4 +1,5 @@
 from database import Database
+from settings import Settings
 from fastapi import FastAPI, HTTPException, UploadFile
 from starlette.responses import FileResponse
 import logging
@@ -17,6 +18,9 @@ driFTPin full-stack example project using FastAPI & TinyDB
 app = FastAPI(title="driFTPin Web Portal", description=description)
 dBase = Database("Database", log)
 app.include_router(dBase.router)
+
+settings = Settings("Settings", log)
+app.include_router(settings.router)
 
 # GET / loads index.html
 @app.get("/")

@@ -1,0 +1,68 @@
+from fastapi import APIRouter
+from tinydb import TinyDB, Query
+import logging
+from pydantic import BaseModel
+from typing import Optional
+from os.path import os
+
+class Settings:
+    def __init__(self, name: str, log: logging):
+        self.log = log
+        self.log.info("Settings")
+        self.name = name
+
+        self.router = APIRouter()
+        self.router.add_api_route("/settings", self.getSettings, methods=["GET"])
+        # self.router.add_api_route("/setting", self.setSetting, methods=["POST"])
+
+        if not os.path.isfile("settings.json"):
+            self.buildDB()
+
+    def buildDB(self):
+
+        self.addSetting("Items")
+        self.addSetting("Pagination")
+        self.addSetting("Filtering")
+        self.addSetting("Mapping")
+        self.addSetting("Uploading")
+
+
+    def addSetting(self, saveSet):
+        table = TinyDB("settings.json").table("settings")
+        table.insert({ "key": saveSet, "value": 1, "group": "Feature"})
+
+    def getSettings(self):
+
+        table = TinyDB("settings.json").table("settings")
+
+        # Never do this in PROD. Some settings must be hidden from the public.
+        return table.all() 
+
+    class SettingKV(BaseModel):
+        key: Optional[str] = None
+        value: Optional[str] = None
+        group: Optional[str] = None
+
+    def setSetting(self, setting_values: SettingKV):
+        self.log.info(f"setSetting {setting_values=}")
+        self.log.info("value " + setting_values.value)
+        # Look for pre-existing setting by finding key name
+        # If found update it, if not create a new entry.
+        table = TinyDB("settings.json").table("settings")
+        entry = table.search(Query().key == setting_values.key)
+        self.log.info("look for key")
+        if entry and entry[0]:
+            entry.value = setting_values.value
+            if setting_values.group:
+                entry.group = setting_values.group
+
+            self.log.info("update Setting")
+            table.update({ 
+                value: setting_values.value,
+                "group": setting_values.group },
+                Query().key == setting_values.key)
+
+        else:
+            self.log.info("insert into Settings")
+            table.insert(setting_values)
+

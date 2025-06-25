@@ -152,7 +152,6 @@ class Database:
                 returnVal += 1
         return returnVal
 
-
   def getItems(self):
     table = TinyDB("driFTPin.json").table("items")
     return table.all()
