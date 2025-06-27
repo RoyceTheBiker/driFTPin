@@ -42,6 +42,34 @@ function setupIndex() {
     $(document).scrollTop(0);
     about.sayHello();
 
+    // get settings and only show active features
+    $.getJSON('/settings', (settingData) => {
+      let loadPage = null;
+      let loadDisplay = null;
+      settingData.forEach( (sD, index, array) => {
+        if(sD.group === 'Feature') {
+          if(sD.value === 0) {
+            $('#featureButton-' + sD.key).addClass('noElement');
+          } else {
+            $('#featureButton-' + sD.key).removeClass('noElement');
+            if(!loadPage) {
+              loadPage = sD.key;
+            }
+          }
+        }
+        if(sD.group === 'Display') {
+          if((sD.value === 1) && (!loadDisplay)) {
+            loadDisplay = sD.key;
+          }
+        }
+      });
+      if(loadDisplay) {
+        $.get('static/' + loadDisplay + '.html', (pageData) => {
+          $('#driFTPinInfo').html(pageData);
+        });
+      }
+    });
+
     items.loadItemsTable();
   });
 }

@@ -19,7 +19,8 @@ class Settings:
             self.buildDB()
 
     def buildDB(self):
-
+        self.addSetting("DriFTPin Info", "Display")
+        self.addSetting("nothingToSeeHere", "Display", 0)
         self.addSetting("Items")
         self.addSetting("Pagination")
         self.addSetting("Filtering")
@@ -27,9 +28,9 @@ class Settings:
         self.addSetting("Uploading")
 
 
-    def addSetting(self, saveSet):
+    def addSetting(self, saveSet: str, group: Optional[str] = None, value: Optional[int] = None):
         table = TinyDB("settings.json").table("settings")
-        table.insert({ "key": saveSet, "value": 1, "group": "Feature"})
+        table.insert({ "key": saveSet, "value": value if not value == None else 1, "group": "Feature" if group == None else group })
 
     def getSettings(self):
 

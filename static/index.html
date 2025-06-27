@@ -20,47 +20,22 @@
 <body onload="setupIndex()">
   <div class="textBox">
     <div class="row">
-      <h1 class="col-4">driFTPin</h1>
+      <h1 class="col-4" id="pageName">driFTPin</h1>
       <div class="col-7">&nbsp;</div>
       <div style="flex: 0;" class="bi bi-gear" onclick="settings.loadSettings()"></div>
     </div>
-    <div>
-      Project homepage on <a href="https://silicontao.com/main/marquis/article/RoyceTheBiker/driFTPin" target="_blank">SiliconTao.com</a><br>
-      Project repository on <a href="https://gitlab.com/SiliconTao-open-source/driFTPin" target="_blank">GitLab</a><br>
-      FastAPI swagger <a href="http://127.0.0.1:8000/docs" target="_blank">127.0.0.1:8000/docs</a>
-    </div>
-    <div>
-      This is a fork of another backend using FastAPI & TinyDB that is actively being developed.
-      Check back often and expect frequent updates to this project.
-    </div>
-    <br>
-    <div>
-      This is an example project of a micro full-stack using these backend tools is a backend framework much like
-      <ul>
-        <li><a href="https://fastapi.tiangolo.com/">FastAPI</a></li>
-        <li><a href="https://tinydb.readthedocs.io/en/latest/">TinyDB</a></li>
-        <li><a href="https://www.python.org/">Python</a></li>
-      </ul>
-    </div>
-    <div>
-      The frontend uses raw
-      <ul>
-        <li><a href="https://www.w3schools.com/html/">HTML</a></li>
-        <li><a href="https://www.w3schools.com/css/">CSS</a></li>
-        <li><a href="https://www.w3schools.com/jQuery/">jQuery</a></li>
-      </ul>
-    </div>
+    <div id="driFTPinInfo"></div>
   </div>
 
   <div class="textBox">
     <h1>driFTPin</h1>
     <div class="textBox">
-      <button onclick="items.loadItemsTable();" class="btn button-36a">Items</button>
-      <button onclick="pagination.loadPageableTable();" class="btn button-36">Pagination</button>
-      <button onclick="filtering.loadFilteringTable();" class="btn button-36c">Filtering</button>
-      <button onclick="mapping.loadMappingTable();" class="btn button-36d">Mapping</button>
-      <button onclick="uploading.loadUploadingTable();" class="btn button-36d">Uploading</button>
-      <button onclick="about.about();" class="btn  button-36e">About</button>
+      <button id="featureButton-Items" onclick="items.loadItemsTable();" class="btn button-36a">Items</button>
+      <button id="featureButton-Pagination" onclick="pagination.loadPageableTable();" class="btn button-36">Pagination</button>
+      <button id="featureButton-Filtering" onclick="filtering.loadFilteringTable();" class="btn button-36c">Filtering</button>
+      <button id="featureButton-Mapping" onclick="mapping.loadMappingTable();" class="btn button-36d">Mapping</button>
+      <button id="featureButton-Uploading" onclick="uploading.loadUploadingTable();" class="btn button-36d">Uploading</button>
+      <button id="featureButton-About" onclick="about.about();" class="btn  button-36e">About</button>
     </div>
     <div id="contentDiv">
 
