@@ -13,7 +13,7 @@ class Settings:
 
         self.router = APIRouter()
         self.router.add_api_route("/settings", self.getSettings, methods=["GET"])
-        # self.router.add_api_route("/setting", self.setSetting, methods=["POST"])
+        self.router.add_api_route("/setting", self.setSetting, methods=["POST"])
 
         if not os.path.isfile("settings.json"):
             self.buildDB()
@@ -40,25 +40,25 @@ class Settings:
 
     class SettingKV(BaseModel):
         key: Optional[str] = None
-        value: Optional[str] = None
+        value: Optional[int] = None
         group: Optional[str] = None
 
     def setSetting(self, setting_values: SettingKV):
         self.log.info(f"setSetting {setting_values=}")
-        self.log.info("value " + setting_values.value)
+        self.log.info("value " + str(setting_values.value))
         # Look for pre-existing setting by finding key name
         # If found update it, if not create a new entry.
         table = TinyDB("settings.json").table("settings")
         entry = table.search(Query().key == setting_values.key)
         self.log.info("look for key")
         if entry and entry[0]:
-            entry.value = setting_values.value
+            entry[0]["value"] = setting_values.value
             if setting_values.group:
-                entry.group = setting_values.group
+                entry[0]["group"] = setting_values.group
 
             self.log.info("update Setting")
             table.update({ 
-                value: setting_values.value,
+                "value": setting_values.value,
                 "group": setting_values.group },
                 Query().key == setting_values.key)
 

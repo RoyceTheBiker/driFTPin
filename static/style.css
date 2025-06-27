@@ -492,3 +492,18 @@ tr:nth-child(odd) {
 	background: #ff0000;
 }
 
+.ui-slider-handle {
+    background-color: #eb4034;
+    border: 1px solid #0000cc; /* Darker blue border */
+}
+
+.ui-slider {
+    background-color: #cccccc; /* Light gray */
+}
+
+/* Targeting the default state of the handle (if applicable) */
+.ui-state-default,
+.ui-widget-content .ui-state-default {
+  background-color: #5362a3;
+}
+
