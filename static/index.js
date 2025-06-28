@@ -77,4 +77,31 @@ function setupIndex() {
 
     items.loadItemsTable();
   });
+
 }
+
+function loadTargetPage(targetPage) {
+  console.log('targetPage is %s', targetPage);
+  $('#appTitle').html(targetPage);
+  switch (targetPage) {
+    case 'Items':
+      items.loadItemsTable();
+      break;
+    case 'Pagination':
+      pagination.loadPageableTable();
+      break;
+    case 'Filtering':
+      filtering.loadFilteringTable();
+      break;
+    case 'Mapping':
+      mapping.loadMappingTable();
+      break;
+    case 'Uploading':
+      uploading.loadUploadingTable();
+      break;
+    case 'About':
+      about.about();
+      break;
+  }
+}
+
