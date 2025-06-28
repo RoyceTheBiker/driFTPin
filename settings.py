@@ -26,7 +26,7 @@ class Settings:
         self.addSetting("Filtering")
         self.addSetting("Mapping")
         self.addSetting("Uploading")
-
+        self.addSetting("About")
 
     def addSetting(self, saveSet: str, group: Optional[str] = None, value: Optional[int] = None):
         table = TinyDB("settings.json").table("settings")
@@ -58,11 +58,11 @@ class Settings:
                 entry[0]["group"] = setting_values.group
 
             self.log.info("update Setting")
-            table.update({ 
-                "value": setting_values.value,
-                "group": setting_values.group },
+            table.update({
+                "value": entry[0]["value"],
+                "group": entry[0]["group"]},
                 Query().key == setting_values.key)
-
+                 
         else:
             self.log.info("insert into Settings")
             table.insert(setting_values)

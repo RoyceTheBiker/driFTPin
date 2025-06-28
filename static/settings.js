@@ -53,7 +53,7 @@ class Settings {
                 $.ajax({
                   url: '/setting',
                   type: 'POST',
-                  data: JSON.stringify( {'key': event.target.id.split('-')[1], 'value': ui.value, 'group': 'Feature' } ),
+                  data: JSON.stringify( {'key': event.target.id.split('-')[1], 'value': ui.value } ),
                   contentType: 'application/json; charset=utf-8',
                   dataType: 'json',
                   success: () => {

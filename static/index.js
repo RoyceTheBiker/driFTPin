@@ -62,12 +62,17 @@ function setupIndex() {
             loadDisplay = sD.key;
           }
         }
+        if(index === array.length - 1) {
+          console.log('loadPage %s', loadPage);
+
+          $('#appTitle').html(loadPage);
+          if(loadDisplay) {
+            $.get('static/' + loadDisplay.replace(' ','') + '.html', (pageData) => {
+              $('#driFTPinInfo').html(pageData);
+            });
+          }
+        }
       });
-      if(loadDisplay) {
-        $.get('static/' + loadDisplay + '.html', (pageData) => {
-          $('#driFTPinInfo').html(pageData);
-        });
-      }
     });
 
     items.loadItemsTable();
