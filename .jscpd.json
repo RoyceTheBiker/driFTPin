@@ -1,0 +1,20 @@
+{
+  "hasModules": false,
+  "threshold": 0,
+  "configurations": {
+    "reporters": [
+      "html",
+      "verbose"
+    ],
+    "format": [
+      "javascript",
+    ],
+    "ignore": [
+      "**/.github/**",
+      "**/*.yml",
+      "**/di.sh"
+    ],
+    "min-tokens": 200,
+    "absolute": true
+  }
+}
