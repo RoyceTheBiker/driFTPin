@@ -13,7 +13,7 @@ on:
     branches: [ "master" ]
 jobs:
   run-lint:
-    runs-on: arch-latest
+    runs-on: alpine-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
