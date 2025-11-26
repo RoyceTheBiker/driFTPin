@@ -22,7 +22,7 @@ git diff-index --quiet HEAD -- && {
 open http://127.0.0.1:8000 &
 
 # Create new session with a running backend
-tmux new-session -s driFTPin -n Shell -d "${SHELL}"
+tmux new-session -s driFTPin -n Shell -d "btop"
 
 tmux new-window -t "driFTPin:1" -n uvicorn -d './.venv/bin/python3 -m uvicorn main:app --reload'
 
